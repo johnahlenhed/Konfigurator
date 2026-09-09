@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
 import { Mesh } from "three";
+import { setSlotColor } from "./materials/applyMaterial";
 
 const model = "/models/Mixer_firstDraft.glb";
 
@@ -17,8 +18,6 @@ export function Model() {
         traverseMeshes(scene, (mesh) => {
             // Log array, or single material name
             getMaterials(mesh).forEach((mat) => console.log(mesh.name, mat.name));
-
-            mesh.onBeforeRender = () => {}
         });
     }, [scene]);
 
@@ -32,6 +31,23 @@ export function Model() {
                 }}
                 onPointerOut={() => setHovered(null)}
             />
+            
+            { /* Test button to change color of a specific material slot */ }
+            <Html fullscreen>
+                { /* Remove the Html comment below whenever needed */ }
+                Hover over parts to see their names in the top left corner. Click the button below to test changing the color of the 'bodyRed' material slot. More info in Model.tsx comments.
+
+                { /*With first draft model naming issues, only part KO_3 will change color with test button */ }
+                { /* Expexted behavior is that all parts with the same material slot name will change color. */ }
+                <button
+                    style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4 }}
+                    onClick={() => setSlotColor(scene, 'bodyRed', '#c33527')}
+                >
+                    Test: Set Red
+                </button>
+            </Html>
+
+            {/* Display hovered mesh name for debugging and part tracking purposes */}
             {hovered && (
                 <Html fullscreen>
                     <div style={{ position: 'absolute', top: 40, left: 40, color: 'white', background: 'black', padding: '4px 8px' }}>

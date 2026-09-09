@@ -15,7 +15,7 @@ export function Scene() {
           <Model />
         </Center>
       </Suspense>
-      // OrbitControls only during development, remove for production.
+      {/* OrbitControls only during development, remove for production. */}
       <OrbitControls />
     </Canvas>
   )
