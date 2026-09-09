@@ -1,9 +1,11 @@
 import { Scene } from './scene/Scene'
 
-export function ConfiguratorCanvas() {
+function App() {
   return (
     <>
       <Scene />
     </>
   )
 }
+
+export default App
