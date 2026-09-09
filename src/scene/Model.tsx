@@ -38,7 +38,7 @@ export function Model() {
                 Hover over parts to see their names in the top left corner. Click the button below to test changing the color of the 'bodyRed' material slot. More info in Model.tsx comments.
 
                 { /*With first draft model naming issues, only part KO_3 will change color with test button */ }
-                { /* Expexted behavior is that all parts with the same material slot name will change color. */ }
+                { /* Expected behavior is that all parts with the same material slot name will change color. */ }
                 <button
                     style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
                     onClick={() => setSlotColor(scene, 'bodyRed', '#c33527')}
