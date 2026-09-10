@@ -1,17 +1,33 @@
 import { useGLTF, Html } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
-import { Mesh } from "three";
-import { setSlotColor } from "./materials/applyMaterial";
+import { useThree } from "@react-three/fiber";
+import { Mesh, Texture } from "three";
+import { setSlotColor, setSlotTexture } from "./materials/applyMaterial";
+import { createKTX2Loader } from "./textures/ktx2Loader";
 
 const model = "/models/Mixer_firstDraft.glb";
 
 export function Model() {
     const { scene } = useGLTF(model);
 
+    // Create a KTX2 loader instance using the WebGL context from useThree
+    const { gl } = useThree()
+    const loader = useMemo(() => createKTX2Loader(gl), [gl]);
+    const [texture, setTexture] = useState<Texture | null>(null);
+
     // State to track hovered mesh name for debugging and part tracking purposes
     const [hovered, setHovered] = useState<string | null>(null);
+
+    // Load the KTX2 texture when the component mounts
+    useEffect(() => {
+        loader.load('/textures/placeholder.ktx2', (tex) => {
+            // Log the loaded texture and its size for debugging purposes
+            console.log('Texture loaded:', tex, 'size:', tex.image?.width, tex.image?.height);
+            setTexture(tex);
+        });
+    }, [loader]);
 
     // Dev logging of mesh names and material names
     useEffect(() => {
@@ -44,6 +60,14 @@ export function Model() {
                     onClick={() => setSlotColor(scene, 'bodyRed', '#c33527')}
                 >
                     Test: Set Red
+                </button>
+
+                { /* Test button to change texture of a specific material slot */ }
+                <button
+                    style={{ position: 'absolute', bottom: 100, left: 200, width: 150, height: 40, backgroundColor: '#2980B9', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
+                    onClick={() => texture && setSlotTexture(scene, 'bodyRed', texture)}
+                >
+                    Test: Set Texture
                 </button>
             </Html>
 
