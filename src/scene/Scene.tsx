@@ -1,22 +1,20 @@
 import { Canvas } from '@react-three/fiber'
+import { Center } from '@react-three/drei'
 import { Suspense } from 'react'
 import { Model } from './Model'
 import { Lighting } from './Lighting'
-
-// OrbitControls only during development, remove for production.
-import { Center, OrbitControls } from '@react-three/drei'
+import { CameraSetup } from './CameraSetup'
 
 export function Scene() {
   return (
     <Canvas>
       <Lighting ambientIntensity={1}/>
+      <CameraSetup position={[0, 0, 10]} /> {/* Remove position for production */}
       <Suspense fallback={null}>
         <Center>
           <Model />
         </Center>
       </Suspense>
-      {/* OrbitControls only during development, remove for production. */}
-      <OrbitControls />
     </Canvas>
   )
 }
