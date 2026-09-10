@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
 import { useThree } from "@react-three/fiber";
-import { Mesh, MeshStandardMaterial, Texture } from "three";
+import { Mesh, Texture } from "three";
 import { setSlotColor, setSlotTexture } from "./materials/applyMaterial";
 import { createKTX2Loader } from "./textures/ktx2Loader";
 
@@ -16,18 +16,9 @@ export function Model() {
     const { gl } = useThree()
     const loader = useMemo(() => createKTX2Loader(gl), [gl]);
     const [texture, setTexture] = useState<Texture | null>(null);
-    const materialRef = useRef<MeshStandardMaterial | null>(null);
 
     // State to track hovered mesh name for debugging and part tracking purposes
     const [hovered, setHovered] = useState<string | null>(null);
-
-    // Update the material's texture when the texture state changes
-    useEffect(() => {
-        if (materialRef.current && texture) {
-            materialRef.current.map = texture
-            materialRef.current.needsUpdate = true
-        }
-    }, [texture])
 
     // Load the KTX2 texture when the component mounts
     useEffect(() => {
