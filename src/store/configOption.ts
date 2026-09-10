@@ -15,3 +15,15 @@ export const baseColors: {
   { id: 'blue', label: 'Blue', hex: '#3568c8' },
   { id: 'yellow', label: 'Yellow', hex: '#d9b62c' },
 ];
+
+import type { AddonType, AddonFunktion } from '../types/configurator';
+
+export const addonTypes: { id: AddonType; label: string }[] = [
+  { id: 'platta', label: 'Platta' },
+  { id: 'hogtalare', label: 'Högtalare' },
+];
+
+export const funktionOptions: { id: AddonFunktion; label: string }[] = [
+  { id: 'funktion-1', label: 'Funktion 1' },
+  { id: 'funktion-2', label: 'Funktion 2' },
+];

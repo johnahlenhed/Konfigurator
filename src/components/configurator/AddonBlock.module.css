@@ -1,0 +1,54 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.typeRow {
+  display: flex;
+  gap: 4px;
+}
+
+.typeButton {
+  flex: 1;
+  height: 48px;
+  border: none;
+  background: #d9d9d9;
+  color: #111111;
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
+.typeButton:hover {
+  background: #cecece;
+}
+
+.typeButton[aria-pressed='true'] {
+  background: #bdbdbd;
+}
+
+.swatchRow {
+  display: flex;
+  gap: 16px;
+}
+
+.funktionSwatch,
+.colorSwatch {
+  width: 56px;
+  height: 56px;
+  border: none;
+  cursor: pointer;
+}
+
+.funktionSwatch {
+  background: #d9d9d9;
+}
+
+.funktionSwatch[aria-pressed='true'],
+.colorSwatch[aria-pressed='true'] {
+  outline: 2px solid #111111;
+  outline-offset: 2px;
+}
