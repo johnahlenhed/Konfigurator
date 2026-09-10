@@ -182,3 +182,28 @@
     border-right-color: var(--border);
   }
 }
+
+.configurator-layout {
+  display: flex;
+  height: 100vh;
+  background: #f4f4f4; /* matches the outer canvas edge visible in the mockups */
+}
+
+.stage {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls-panel {
+  width: 420px;
+  flex-shrink: 0;
+  background: #efefef;
+  padding: 5rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto; /* in case Base+2's full stack exceeds viewport height */
+}

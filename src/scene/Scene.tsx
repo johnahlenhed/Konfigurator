@@ -7,7 +7,7 @@ import { CameraSetup } from './CameraSetup'
 
 export function Scene() {
   return (
-    <Canvas>
+     <Canvas style={{ width: '100%', height: '100%' }}>
       <Lighting ambientIntensity={1}/>
       <CameraSetup position={[0, 0, 10]} /> {/* Remove position for production */}
       <Suspense fallback={null}>

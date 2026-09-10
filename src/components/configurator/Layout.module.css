@@ -1,0 +1,19 @@
+.configuratorLayout {
+  display: flex;
+  height: 100vh;
+  background: #f4f4f4;
+}
+
+.stage {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controlsPanel {
+  width: 420px;
+  flex-shrink: 0;
+  background: #efefef;
+}
