@@ -4,6 +4,7 @@ import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
 import { Mesh } from "three";
 import { setSlotColor } from "./materials/applyMaterial";
+import { useConfiguratorStore } from "../store/configuratorStore";
 
 const model = "/models/Mixer_firstDraft.glb";
 
@@ -13,6 +14,10 @@ export function Model() {
     // State to track hovered mesh name for debugging and part tracking purposes
     const [hovered, setHovered] = useState<string | null>(null);
 
+    const baseColor = useConfiguratorStore(
+        (state) => state.selection.baseColor
+    );
+
     // Dev logging of mesh names and material names
     useEffect(() => {
         traverseMeshes(scene, (mesh) => {
@@ -20,6 +25,22 @@ export function Model() {
             getMaterials(mesh).forEach((mat) => console.log(mesh.name, mat.name));
         });
     }, [scene]);
+
+    useEffect(() => {
+        if (!baseColor) return;
+
+        const colors = {
+            red: '#c33527',
+            blue: '#3568c8',
+            yellow: '#d9b62c',
+        };
+
+        setSlotColor(
+            scene,
+            'bodyRed',
+            colors[baseColor]
+        );
+    }, [scene, baseColor]);
 
     return (
         <>

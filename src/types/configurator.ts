@@ -10,4 +10,8 @@ export type BaseLevel = 'base' | 'base+1' | 'base+2';
 
 export interface ConfiguratorSelection {
   baseLevel: BaseLevel | null;
+  baseColor: BaseColor | null;
 }
+
+
+export type BaseColor = 'red' | 'blue' | 'yellow';
