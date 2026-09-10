@@ -5,3 +5,9 @@ export interface ColorOptions {
     label: string; // e.g. 'Racing Red'
     hex: string; // e.g. '#FFFFFF'
 }
+
+export type BaseLevel = 'base' | 'base+1' | 'base+2';
+
+export interface ConfiguratorSelection {
+  baseLevel: BaseLevel | null;
+}
