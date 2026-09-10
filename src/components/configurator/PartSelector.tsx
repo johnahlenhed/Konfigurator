@@ -1,4 +1,6 @@
 import { useConfiguratorStore } from '../../store/configuratorStore';
+import { baseLevels } from '../../store/configOption';
+import styles from './PartSelector.module.css';
 
 export function PartSelector() {
   const baseLevel = useConfiguratorStore(
@@ -10,12 +12,18 @@ export function PartSelector() {
   );
 
   return (
-    <button
-      type="button"
-      onClick={() => setBaseLevel('base')}
-      aria-pressed={baseLevel === 'base'}
-    >
-      Base
-    </button>
+    <div className={styles.container}>
+      {baseLevels.map((level) => (
+        <button
+          key={level.id}
+          type="button"
+          className={styles.button}
+          onClick={() => setBaseLevel(level.id)}
+          aria-pressed={baseLevel === level.id}
+        >
+          {level.label}
+        </button>
+      ))}
+    </div>
   );
 }
