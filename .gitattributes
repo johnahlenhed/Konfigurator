@@ -1,0 +1,4 @@
+*.glb binary
+*.ktx2 binary
+*.wasm binary
+*.png binary

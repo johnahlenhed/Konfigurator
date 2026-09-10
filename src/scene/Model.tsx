@@ -1,17 +1,38 @@
 import { useGLTF, Html } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
-import { Mesh } from "three";
+import { useThree } from "@react-three/fiber";
+import { Mesh, MeshStandardMaterial, Texture } from "three";
 import { setSlotColor } from "./materials/applyMaterial";
+import { createKTX2Loader } from "./textures/ktx2Loader";
 
 const model = "/models/Mixer_firstDraft.glb";
 
 export function Model() {
     const { scene } = useGLTF(model);
 
+    const { gl } = useThree()
+    const loader = useMemo(() => createKTX2Loader(gl), [gl]);
+    const [texture, setTexture] = useState<Texture | null>(null);
+    const materialRef = useRef<MeshStandardMaterial | null>(null);
+
     // State to track hovered mesh name for debugging and part tracking purposes
     const [hovered, setHovered] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (materialRef.current && texture) {
+            materialRef.current.map = texture
+            materialRef.current.needsUpdate = true
+        }
+    }, [texture])
+
+    useEffect(() => {
+        loader.load('/textures/placeholder.ktx2', (tex) => {
+            console.log('Texture loaded:', tex, 'size:', tex.image?.width, tex.image?.height);
+            setTexture(tex);
+        });
+    }, [loader]);
 
     // Dev logging of mesh names and material names
     useEffect(() => {
@@ -23,6 +44,10 @@ export function Model() {
 
     return (
         <>
+            <mesh position={[3, 0, 0]}>
+                <boxGeometry />
+                <meshStandardMaterial ref={materialRef} />
+            </mesh>
             <primitive
                 object={scene}
                 onPointerOver={(e: ThreeEvent<PointerEvent>) => {
