@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  gap: 16px;
+}
+
+.swatch {
+  width: 56px;
+  height: 56px;
+  border: none;
+  cursor: pointer;
+}
+
+.swatch[aria-pressed='true'] {
+  outline: 2px solid #111111;
+  outline-offset: 2px;
+}
