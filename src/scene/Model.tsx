@@ -1,11 +1,12 @@
 import { useGLTF, Html } from "@react-three/drei";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
 import { useThree } from "@react-three/fiber";
 import { Mesh, Texture } from "three";
-import { setSlotColor, setSlotTexture } from "./materials/applyMaterial";
+import { setSlotColor, setSlotTexture, applyColorScheme } from "./materials/applyMaterial";
 import { createKTX2Loader } from "./textures/ktx2Loader";
+import { baseColorSchemes } from "./materials/colorSchemes";
 
 const model = "/models/Mixer_firstDraft.glb";
 
@@ -68,6 +69,20 @@ export function Model() {
                     onClick={() => texture && setSlotTexture(scene, 'bodyRed', texture)}
                 >
                     Test: Set Texture
+                </button>
+
+                { /* Test button to apply a color scheme */ }
+                <button 
+                    style={{ position: 'absolute', bottom: 150, left: 200, width: 150, height: 40, backgroundColor: '#1aff00', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
+                    onClick={() => applyColorScheme(scene, baseColorSchemes.ocean)}
+                >
+                    Test: Ocean Scheme
+                </button>
+                <button 
+                    style={{ position: 'absolute', bottom: 200, left: 200, width: 150, height: 40, backgroundColor: '#00ffea', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
+                    onClick={() => applyColorScheme(scene, baseColorSchemes.sunset)}
+                >
+                    Test: Sunset Scheme
                 </button>
             </Html>
 
