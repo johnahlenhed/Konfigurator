@@ -1,0 +1,28 @@
+/* Section.module.css */
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid #dcdcdc;
+}
+
+.left {
+  font-size: 16px;
+  color: #2b1c0e;
+  min-width: 0;
+}
+
+.middle {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}

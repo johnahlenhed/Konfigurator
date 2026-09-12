@@ -3,6 +3,7 @@ import { useConfiguratorStore } from '../../store/configuratorStore';
 import { addonTypes, funktionOptions, baseColors } from '../../store/configOption';
 import type { AddonType, AddonFunktion, BaseColor } from '../../types/configurator';
 import { RadioOptionRow } from './RadioOptionRow';
+import { Section } from './Section';
 import styles from './AddonBlock.module.css';
 
 interface AddonBlockProps {
@@ -26,8 +27,8 @@ export function AddonBlock({ index }: AddonBlockProps) {
     setIsExpanded(false);
   }
 
-  return (
-    <div className={styles.block}>
+  const header = (
+    <>
       <button
         type="button"
         className={styles.header}
@@ -45,31 +46,30 @@ export function AddonBlock({ index }: AddonBlockProps) {
           onSelect={() => handleSwap(alternateType.id)}
         />
       )}
+    </>
+  );
 
-      <div className={styles.columns}>
-        <div className={styles.column}>
-          {funktionOptions.map((f) => (
-            <RadioOptionRow
-              key={f.id}
-              label={f.label}
-              selected={addon.funktion === f.id}
-              onSelect={() => setAddonFunktion(index, f.id as AddonFunktion)}
-            />
-          ))}
-        </div>
-
-        <div className={styles.column}>
-          {baseColors.map((c) => (
-            <RadioOptionRow
-              key={c.id}
-              label={c.label}
-              colorHex={c.hex}
-              selected={addon.color === c.id}
-              onSelect={() => setAddonColor(index, c.id as BaseColor)}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+  return (
+    <Section
+      title={header}
+      middle={funktionOptions.map((f) => (
+        <RadioOptionRow
+          key={f.id}
+          label={f.label}
+          selected={addon.funktion === f.id}
+          onSelect={() => setAddonFunktion(index, f.id as AddonFunktion)}
+        />
+      ))}
+    >
+      {baseColors.map((c) => (
+        <RadioOptionRow
+          key={c.id}
+          label={c.label}
+          colorHex={c.hex}
+          selected={addon.color === c.id}
+          onSelect={() => setAddonColor(index, c.id as BaseColor)}
+        />
+      ))}
+    </Section>
   );
 }

@@ -15,11 +15,12 @@
   justify-content: center;
 }
 
+/* Layout.module.css */
 .controlsPanel {
   width: 360px;
   flex-shrink: 0;
   background: #f1f1f1;
-
   padding: 76px 28px;
   box-sizing: border-box;
+  overflow-x: hidden; /* clip instead of pushing the page wider if this ever overflows again */
 }
