@@ -1,8 +1,11 @@
-import type { MaterialSlotKey } from "./materialConfig";
+// import type { MaterialSlotKey } from "./materialConfig";
 
-export interface ColorScheme {
+// addonColorSchemes intentionally uses its own placeholder type —
+// not real MaterialSlotKey yet, since no addon GLB/materials exist.
+// Do NOT pass these to applyColorScheme until an addon slot config exists.
+interface PlaceholderAddonScheme {
     label: string;
-    slots: Partial<Record<MaterialSlotKey, string>>;
+    slots: Record<string, string>;
 }
 
 // KNOWN ISSUE: 'low' currently shares its underlying material (plasticBlack)
@@ -19,7 +22,9 @@ export const baseColorSchemes = {
         slots: { 
             gain: '#4dff00', 
             mid: '#ff0000', 
-            low: '#fffb00',
+            // low intentionally omitted — still shares 'plasticBlack' with
+            // fader/phones/volume; changing it recolors those too.
+            // Re-add once CG delivers a dedicated 'low' material.
         }
     },
 
@@ -28,17 +33,18 @@ export const baseColorSchemes = {
         slots: { 
             gain: '#2C2C2C', 
             mid: '#2C2C2C', 
-            low: '#2C2C2C', 
+            // low intentionally omitted — still shares 'plasticBlack' with
+            // fader/phones/volume; changing it recolors those too.
+            // Re-add once CG delivers a dedicated 'low' material.
         } 
     },
 } as const
 
 export type BaseSchemeId = keyof typeof baseColorSchemes;
 
-// addonPaint is a placeholder
-export const addonColorSchemes = {
+export const addonColorSchemes: Record<string, PlaceholderAddonScheme> = {
     classic: { label: 'Classic', slots: { addonPaint: '#2C2C2C' } },
     bright: { label: 'Bright', slots: { addonPaint: '#F1C40F' } },
-} as const
+}
 
 export type AddonSchemeId = keyof typeof addonColorSchemes;
