@@ -6,6 +6,7 @@ import { detachPart } from "./detachPart";
 import { attachSocket } from "./attachSocket";
 
 // TEMPORARY: hardcoded test parts until real assets + naming convention land
+// Files intentionally not yet added to public/models — swap will 404 until then.
 const TEST_PARTS: Record<string, string> = {
     lidWood: '/models/lidWood.glb',
     lidMetal: '/models/lidMetal.glb'

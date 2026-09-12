@@ -9,9 +9,11 @@ import * as THREE from "three";
  * @param socket - The target transform, as returned by getSocket()
  */
 
-export function attachSocket(part: THREE.Object3D, socket: { position: THREE.Vector3; rotation: THREE.Euler }) {
+export function attachSocket(
+    part: THREE.Object3D, 
+    socket: { position: THREE.Vector3; quaternion: THREE.Quaternion }) {
 
-    // Copy rather than assign, so we don't accidentally share the same Vector3/Euler instance between socket and part
+    // Copy rather than assign, so we don't accidentally share the same Vector3/Quaternion instance between socket and part
     part.position.copy(socket.position);
-    part.rotation.copy(socket.rotation)
+    part.quaternion.copy(socket.quaternion)
 }

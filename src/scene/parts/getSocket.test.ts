@@ -19,7 +19,7 @@ describe('getSocket', () => {
     });
 
     it('returns null and warns for missing socket', () => {
-        // Empty scene - no node named "socketMissing exists"
+        // Empty scene - no node named "socketMissing" exists
         const scene = new THREE.Group();
 
         // Should not throw; should fail gracefully instead

@@ -3,14 +3,14 @@ import * as THREE from "three";
 import { attachSocket } from "./attachSocket";
 
 describe("attachSocket", () => {
-    it("copies socket postition and rotation onto the part", () => {
+    it("copies socket position and rotation onto the part", () => {
         // A bare Object3D stands in for a loaded part's root node
         const part = new THREE.Object3D();
 
         // Mimics the shape returned by getSocket();
         const socket = {
             position: new THREE.Vector3(1, 2, 3),
-            rotation: new THREE.Euler(0, Math.PI / 2, 0),
+            quaternion: new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.PI / 2, 0)),
         };
 
         attachSocket(part, socket);
@@ -28,7 +28,8 @@ describe("attachSocket", () => {
         const part = new THREE.Object3D();
         const socket = {
             position: new THREE.Vector3(1, 2, 3),
-            rotation: new THREE.Euler(0, 0, 0),
+            quaternion: new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.PI / 2, 0)),
+
         };
 
         attachSocket(part, socket);
