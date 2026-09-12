@@ -1,5 +1,6 @@
 import { useConfiguratorStore } from '../../store/configuratorStore';
 import { baseColors } from '../../store/configOption';
+import { RadioOptionRow } from './RadioOptionRow';
 import styles from './ColorPicker.module.css';
 
 export function ColorPicker() {
@@ -7,16 +8,14 @@ export function ColorPicker() {
   const setBaseColor = useConfiguratorStore((state) => state.setBaseColor);
 
   return (
-    <div className={styles.row}>
+    <div className={styles.container}>
       {baseColors.map((color) => (
-        <button
+        <RadioOptionRow
           key={color.id}
-          type="button"
-          className={styles.swatch}
-          style={{ backgroundColor: color.hex }}
-          onClick={() => setBaseColor(color.id)}
-          aria-pressed={baseColor === color.id}
-          aria-label={color.label}
+          label={color.label}
+          colorHex={color.hex}
+          selected={baseColor === color.id}
+          onSelect={() => setBaseColor(color.id)}
         />
       ))}
     </div>

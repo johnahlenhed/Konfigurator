@@ -4,51 +4,32 @@
   gap: 16px;
 }
 
-.typeRow {
+.header {
   display: flex;
-  gap: 4px;
-}
-
-.typeButton {
-  flex: 1;
-  height: 48px;
+  align-items: center;
+  gap: 8px;
+  background: none;
   border: none;
-  background: #d9d9d9;
-  color: #111111;
   font: inherit;
   font-size: 16px;
-  text-align: left;
-  padding: 0 16px;
+  color: #2b1c0e;
   cursor: pointer;
+  padding: 0;
+  align-self: flex-start;
 }
 
-.typeButton:hover {
-  background: #cecece;
+.chevron {
+  font-size: 12px;
 }
 
-.typeButton[aria-pressed='true'] {
-  background: #bdbdbd;
-}
-
-.swatchRow {
+.columns {
   display: flex;
+  gap: 32px;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-}
-
-.funktionSwatch,
-.colorSwatch {
-  width: 56px;
-  height: 56px;
-  border: none;
-  cursor: pointer;
-}
-
-.funktionSwatch {
-  background: #d9d9d9;
-}
-
-.funktionSwatch[aria-pressed='true'],
-.colorSwatch[aria-pressed='true'] {
-  outline: 2px solid #111111;
-  outline-offset: 2px;
 }

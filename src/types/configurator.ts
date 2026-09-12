@@ -1,12 +1,12 @@
-export type MaterialSlot = string; // e.g. 'bodyBlack'
+export type BaseLevel = 'beginner' | 'enthusiast' | 'producer';
+export type AddonType = 'speaker' | 'mixer';
+export type AddonFunktion = 'funktion-1' | 'funktion-2';
 
-export interface ColorOptions {
-    id: string; // e.g. 'red'
-    label: string; // e.g. 'Racing Red'
-    hex: string; // e.g. '#FFFFFF'
+export interface AddonSelection {
+  type: AddonType;
+  funktion: AddonFunktion | null;
+  color: BaseColor | null;
 }
-
-export type BaseLevel = 'base' | 'base+1' | 'base+2';
 
 export interface ConfiguratorSelection {
   baseLevel: BaseLevel | null;
@@ -15,12 +15,3 @@ export interface ConfiguratorSelection {
 }
 
 export type BaseColor = 'red' | 'blue' | 'yellow';
-
-export type AddonType = 'platta' | 'hogtalare';
-export type AddonFunktion = 'funktion-1' | 'funktion-2'; // placeholder ids until WU names the real variants
-
-export interface AddonSelection {
-  type: AddonType | null;
-  funktion: AddonFunktion | null;
-  color: BaseColor | null;
-}

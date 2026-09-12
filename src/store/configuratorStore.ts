@@ -6,7 +6,7 @@ import type {
   AddonFunktion,
   ConfiguratorSelection,
 } from '../types/configurator';
-import { addonSlotCount } from './configRules';
+import { defaultAddonTypes } from '../store/configOption';
 
 interface ConfiguratorState {
   selection: ConfiguratorSelection;
@@ -15,10 +15,6 @@ interface ConfiguratorState {
   setAddonType: (index: number, type: AddonType) => void;
   setAddonFunktion: (index: number, funktion: AddonFunktion) => void;
   setAddonColor: (index: number, color: BaseColor) => void;
-}
-
-function emptyAddon() {
-  return { type: null, funktion: null, color: null };
 }
 
 export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
@@ -33,16 +29,16 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
       selection: {
         ...state.selection,
         baseLevel: level,
-        addons: Array.from({ length: addonSlotCount[level] }, (_, i) =>
-          state.selection.addons[i] ?? emptyAddon()
-        ),
+        addons: defaultAddonTypes[level].map((type, i) => ({
+          type,
+          funktion: state.selection.addons[i]?.funktion ?? null,
+          color: state.selection.addons[i]?.color ?? null,
+        })),
       },
     })),
 
   setBaseColor: (color) =>
-    set((state) => ({
-      selection: { ...state.selection, baseColor: color },
-    })),
+    set((state) => ({ selection: { ...state.selection, baseColor: color } })),
 
   setAddonType: (index, type) =>
     set((state) => {
