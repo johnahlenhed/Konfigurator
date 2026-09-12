@@ -6,15 +6,9 @@ export interface ColorScheme {
 }
 
 export const baseColorSchemes = {
-    ocean: {
-    label: 'Ocean',
-    slots: { bodyBlue: '#2980B9' },
-    },
-    sunset: {
-    label: 'Sunset',
-    slots: { bodyRed: '#E67E22' },
-    },
-} as const satisfies Record<string, ColorScheme>
+    classic: { label: 'Classic', slots: { gain: '#E67E22', mid: '#27AE60' } },
+    monochrome: { label: 'Monochrome', slots: { gain: '#2C2C2C', mid: '#2C2C2C' } },
+} as const
 
 export type BaseSchemeId = keyof typeof baseColorSchemes;
 

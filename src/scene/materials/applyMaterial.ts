@@ -2,7 +2,7 @@ import { MeshStandardMaterial, Object3D, Texture } from 'three'
 import { traverseMeshes, getMaterials } from '../../utils/modelHelpers'
 import type { MaterialSlotKey } from './materialConfig'
 import { getMaterialName } from './materialSlots'
-import type { ColorScheme } from '../../types/configurator'
+import type { ColorScheme } from './colorSchemes'
 
 export function setSlotColor(root: Object3D, slot: MaterialSlotKey, hex: string) {
     const targetName = getMaterialName(slot)
