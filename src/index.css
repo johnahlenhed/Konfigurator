@@ -28,6 +28,12 @@
   @media (max-width: 1024px) {
     font-size: 16px;
   }
+
+  --color-bg-stage: #ffffff;
+  --color-bg-panel: #f1f1f1;
+  --color-text-primary: #2b1c0e;
+  --color-text-muted: #9c9c9c;
+  --color-border: #dcdcdc;
 }
 
 @media (prefers-color-scheme: dark) {

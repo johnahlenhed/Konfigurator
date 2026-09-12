@@ -60,12 +60,6 @@ export function Model() {
 
                 { /*With first draft model naming issues, only part KO_3 will change color with test button */ }
                 { /* Expected behavior is that all parts with the same material slot name will change color. */ }
-                <button
-                    style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-                    onClick={() => setSlotColor(scene, 'bodyRed', '#c33527')}
-                >
-                    Test: Set Red
-                </button>
             </Html>
 
             {/* Display hovered mesh name for debugging and part tracking purposes */}

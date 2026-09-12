@@ -1,0 +1,23 @@
+/* StageOverlay.module.css */
+.logo {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--color-text-primary);
+  pointer-events: none;
+}
+
+.description {
+  position: absolute;
+  bottom: 96px;
+  left: 24px;
+  max-width: 260px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  pointer-events: none;
+}
