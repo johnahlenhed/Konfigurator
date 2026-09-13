@@ -35,14 +35,14 @@ export const baseColors: { id: BaseColor; label: string; hex: string }[] = [
   { id: 'yellow', label: 'Yellow', hex: '#d9b62c' },
 ];
 
-export const addonTypes: { id: AddonType; label: string }[] = [
-  { id: 'speaker', label: 'Speaker' },
-  { id: 'mixer', label: 'Mixer' },
+export const addonTypes: { id: AddonType; label: string; price: number }[] = [
+  { id: 'speaker', label: 'Speaker', price: 1200 },
+  { id: 'mixer', label: 'Mixer', price: 900 },
 ];
 
-export const funktionOptions: { id: AddonFunktion; label: string }[] = [
-  { id: 'funktion-1', label: 'Funktion 1' },
-  { id: 'funktion-2', label: 'Funktion 2' },
+export const funktionOptions: { id: AddonFunktion; label: string; price: number }[] = [
+  { id: 'funktion-1', label: 'Funktion 1', price: 300 },
+  { id: 'funktion-2', label: 'Funktion 2', price: 600 },
 ];
 
 // Default type per addon slot, keyed by base level. Order matters —
