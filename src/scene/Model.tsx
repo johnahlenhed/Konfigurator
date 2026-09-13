@@ -12,7 +12,7 @@ import { AddonSwap } from "./parts/addonSwap";
 
 const model = "/models/Mixer_preview.glb";
 
-export function Model() {
+export function Model({ onSwapAddon } : { onSwapAddon: () => void }) {
   const { scene, animations } = useGLTF(model);
   const { actions } = useAnimations(animations, scene);
 
@@ -79,6 +79,13 @@ export function Model() {
           onClick={() => applyColorScheme(scene, baseColorSchemes.classic)}
         >
           Test: Classic Scheme
+        </button>
+        
+        <button
+          style={{ position: 'absolute', bottom: 150, left: 200, width: 150, height: 40, backgroundColor: '#b31794', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
+          onClick={() => onSwapAddon()}
+        >
+          Test: Swap addon
         </button>
       </Html>
 
