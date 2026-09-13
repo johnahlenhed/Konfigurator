@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import styles from './Layout.module.css';
 import { ControlsPanel } from './ControlsPanel';
 import { StageOverlay } from './StageOverlay';
+import { ContinueButton } from './ContinueButton';
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,9 +18,11 @@ export function Layout({ children }: LayoutProps) {
 
       <aside className={styles.controlsPanel}>
         <div className={styles.controlsPanelInner}>
-            <ControlsPanel />
+          <ControlsPanel />
         </div>
       </aside>
+
+      <ContinueButton />
     </div>
   );
 }
