@@ -8,6 +8,7 @@ import { useThree } from "@react-three/fiber";
 import { setSlotTexture, applyColorScheme } from "./materials/applyMaterial";
 import { createKTX2Loader } from "./textures/ktx2Loader";
 import { baseColorSchemes } from "./materials/colorSchemes";
+import { AddonSwap } from "./parts/addonSwap";
 
 const model = "/models/Mixer_preview.glb";
 
