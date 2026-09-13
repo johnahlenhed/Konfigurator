@@ -16,7 +16,9 @@ export function Layout({ children }: LayoutProps) {
       </main>
 
       <aside className={styles.controlsPanel}>
-        <ControlsPanel />
+        <div className={styles.controlsPanelInner}>
+            <ControlsPanel />
+        </div>
       </aside>
     </div>
   );

@@ -1,15 +1,16 @@
+/* Layout.module.css */
 .configuratorLayout {
   display: flex;
   width: 100%;
   height: 100vh;
-  background: #f4f4f4;
+  background: var(--color-bg-stage);
 }
 
 .stage {
   flex: 1;
   min-width: 0;
-  background: #ffffff;
-
+  position: relative;
+  background: var(--color-bg-stage);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,10 +18,21 @@
 
 /* Layout.module.css */
 .controlsPanel {
-  width: 360px;
+  width: 140px; /* peek */
   flex-shrink: 0;
-  background: #f1f1f1;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  background: var(--color-bg-panel);
+}
+
+.controlsPanel:hover {
+  width: 33vw;
+}
+
+.controlsPanelInner {
+  width: 33vw;
+  height: 100%;
   padding: 76px 28px;
   box-sizing: border-box;
-  overflow-x: hidden; /* clip instead of pushing the page wider if this ever overflows again */
+  overflow-y: auto;
 }
