@@ -18,10 +18,8 @@ export function Scene() {
       <Lighting ambientIntensity={1.5} directionalIntensity={3} directionalPosition={[7, 7, 9]}/>
       <CameraSetup position={[0, 6, 10]}/>
       <Suspense fallback={null}>
-        <Center>
           <AddonSwap selectedAddon={selectedAddon}/>
           <Model onSwapAddon={toggleAddon}/>
-        </Center>
       </Suspense>
     </Canvas>
   )
