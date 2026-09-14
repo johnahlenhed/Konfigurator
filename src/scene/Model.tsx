@@ -9,7 +9,7 @@ import { setSlotTexture, applyColorScheme } from "./materials/applyMaterial";
 import { createKTX2Loader } from "./textures/ktx2Loader";
 import { baseColorSchemes } from "./materials/colorSchemes";
 
-const model = "/models/Mixer_preview.glb";
+const model = "/models/Mixer_fixad.glb";
 
 export function Model() {
   const { scene, animations } = useGLTF(model);
