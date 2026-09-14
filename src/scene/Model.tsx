@@ -81,6 +81,13 @@ export function Model() {
 
       <Html fullscreen style={{ pointerEvents: "none" }}>
         <button
+          style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
+          onClick={() => applyColorScheme(scene, baseColorSchemes.monochrome)}
+        >
+          Test: Monochrome
+        </button>
+
+        <button
           style={{ position: 'absolute', bottom: 100, left: 200, width: 150, height: 40, backgroundColor: '#2980B9', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
           onClick={() => texture && setSlotTexture(scene, 'gain', texture)}
         >
