@@ -1,7 +1,7 @@
 .logo {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 0;
+  left: 0;
   font-family: var(--font-gantari);
   font-size: 110px;
   font-weight: 400;

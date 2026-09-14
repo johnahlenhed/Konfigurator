@@ -1,6 +1,6 @@
 .mark {
   position: absolute;
-  top: 8px;
+  top: 16px;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-gantari);
@@ -8,4 +8,10 @@
   color: var(--color-text-primary);
   pointer-events: none;
   z-index: 10;
+}
+
+.registered {
+  font-size: 10px;
+  vertical-align: super;
+  margin-left: 2px;
 }

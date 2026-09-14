@@ -4,7 +4,9 @@ import styles from './StageOverlay.module.css';
 
 export function StageOverlay() {
   const baseLevel = useConfiguratorStore((state) => state.selection.baseLevel);
-  const currentLevel = baseLevels.find((level) => level.id === baseLevel);
+  const currentLevel =
+    baseLevels.find((level) => level.id === baseLevel) ??
+    baseLevels.find((level) => level.id === 'beginner');
 
   return (
     <>
