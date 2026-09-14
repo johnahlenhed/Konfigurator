@@ -25,11 +25,11 @@
 }
 
 .controlsPanel:hover {
-  width: 24vw;
+  width: 28vw;
 }
 
 .controlsPanelInner {
-  width: 24vw;
+  width: 28vw;
   height: 100%;
   padding: 60px 24px;
   box-sizing: border-box;

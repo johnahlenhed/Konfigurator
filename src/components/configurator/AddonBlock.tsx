@@ -52,14 +52,19 @@ export function AddonBlock({ index }: AddonBlockProps) {
   return (
     <Section
       title={header}
-      middle={funktionOptions.map((f) => (
-        <RadioOptionRow
-          key={f.id}
-          label={f.label}
-          selected={addon.funktion === f.id}
-          onSelect={() => setAddonFunktion(index, f.id as AddonFunktion)}
-        />
-      ))}
+      middle={
+        <>
+          <div className={styles.middleSpacer} />
+          {funktionOptions.map((f) => (
+            <RadioOptionRow
+              key={f.id}
+              label={f.label}
+              selected={addon.funktion === f.id}
+              onSelect={() => setAddonFunktion(index, f.id as AddonFunktion)}
+            />
+          ))}
+        </>
+      }
     >
       {baseColors.map((c) => (
         <RadioOptionRow

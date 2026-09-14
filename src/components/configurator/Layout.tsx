@@ -4,6 +4,7 @@ import { ControlsPanel } from './ControlsPanel';
 import { StageOverlay } from './StageOverlay';
 import { ContinueButton } from './ContinueButton';
 import { BrandMark } from './BrandMark'
+import { HookIcon } from './HookIcon'
 
 interface LayoutProps {
   children: ReactNode;
@@ -21,6 +22,7 @@ export function Layout({ children }: LayoutProps) {
           <ControlsPanel />
         </div>
       </aside>
+      <HookIcon />
       <BrandMark />
       <ContinueButton />
     </div>

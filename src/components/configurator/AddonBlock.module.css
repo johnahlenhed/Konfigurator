@@ -5,10 +5,14 @@
   background: none;
   border: none;
   font-family: var(--font-inter);
-  font-size: 20px;
+  font-size: 15px;
   color: var(--color-text-primary);
   cursor: pointer;
   padding: 0;
+}
+
+.middleSpacer {
+  height: 22px; /* matches one RadioOptionRow's rendered height at the new font size */
 }
 
 .chevron {

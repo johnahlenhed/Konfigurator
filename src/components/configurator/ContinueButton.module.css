@@ -1,9 +1,11 @@
 .button {
   position: absolute;
-  bottom: 24px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 14px 28px;
+  min-width: 320px;
+  padding: 18px 40px;
+  text-align: center;
   background: var(--color-button-bg);
   color: var(--color-button-text);
   border: none;
