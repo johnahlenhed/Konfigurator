@@ -7,11 +7,13 @@ export function getVisibleSections(sel: ConfiguratorSelection) {
   };
 }
 
-export function getTotalPrice(sel: ConfiguratorSelection): number | null {
-  if (!sel.baseLevel) return null;
+export function getTotalPrice(sel: ConfiguratorSelection): number {
+  if (!sel.baseLevel) {
+    return Math.min(...baseLevels.map((l) => l.price));
+  }
 
   const level = baseLevels.find((l) => l.id === sel.baseLevel);
-  if (!level) return null;
+  if (!level) return Math.min(...baseLevels.map((l) => l.price));
 
   const addonsTotal = sel.addons.reduce((sum, addon) => {
     const type = addonTypes.find((t) => t.id === addon.type);

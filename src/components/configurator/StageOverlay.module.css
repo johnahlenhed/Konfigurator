@@ -1,12 +1,12 @@
-/* StageOverlay.module.css */
 .logo {
   position: absolute;
   top: 24px;
   left: 24px;
-  font-size: 56px;
+  font-family: var(--font-gantari);
+  font-size: 128px;
   font-weight: 700;
   line-height: 1;
-  letter-spacing: -1px;
+  letter-spacing: -2px;
   color: var(--color-text-primary);
   pointer-events: none;
 }
@@ -15,9 +15,10 @@
   position: absolute;
   bottom: 96px;
   left: 24px;
-  max-width: 260px;
-  font-size: 14px;
+  max-width: 320px;
+  font-family: var(--font-figtree);
+  font-size: 20px;
   line-height: 1.5;
-  color: var(--color-text-primary);
+  color: var(--color-text-info);
   pointer-events: none;
 }

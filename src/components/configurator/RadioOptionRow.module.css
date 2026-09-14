@@ -31,11 +31,14 @@
 }
 
 .label {
-  font-size: 16px;
-  color: #2b1c0e;
+  font-family: var(--font-inter);
+  font-size: 20px;
+  color: var(--color-text-primary);
 }
 
 .subtext {
-  font-size: 12px;
-  color: #a8a8a8;
+  font-family: var(--font-inter);
+  font-size: 14px; /* not specified — kept smaller than the label, ratio guessed */
+  color: var(--color-text-primary);
+  opacity: 0.5;
 }

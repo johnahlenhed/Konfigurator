@@ -4,9 +4,9 @@
   gap: 8px;
   background: none;
   border: none;
-  font: inherit;
-  font-size: 16px;
-  color: #2b1c0e;
+  font-family: var(--font-inter);
+  font-size: 20px;
+  color: var(--color-text-primary);
   cursor: pointer;
   padding: 0;
 }

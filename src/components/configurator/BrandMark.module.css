@@ -1,0 +1,11 @@
+.mark {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-gantari);
+  font-size: 24px;
+  color: var(--color-text-primary);
+  pointer-events: none;
+  z-index: 10;
+}

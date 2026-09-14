@@ -12,12 +12,9 @@ export function ContinueButton() {
     <button
       type="button"
       className={styles.button}
-      disabled={price === null}
-      onClick={() => {
-        console.log('Continue clicked', selection);
-      }}
+      onClick={() => console.log('Continue clicked', selection)}
     >
-      {price === null ? 'Select a base' : `Continue – ${priceFormatter.format(price)} kr`}
+      Continue – {priceFormatter.format(price)} kr
     </button>
   );
 }

@@ -34,6 +34,16 @@
   --color-text-primary: #2b1c0e;
   --color-text-muted: #9c9c9c;
   --color-border: #dcdcdc;
+  --color-bg: #FAFAFA;
+  --color-text-primary: #342000;
+  --color-text-info: #000000;
+  --color-button-bg: #342000;
+  --color-button-text: #f8f6e5;
+  --color-border: #dcdcdc;
+
+  --font-inter: 'Inter', sans-serif;
+  --font-gantari: 'Gantari', sans-serif;
+  --font-figtree: 'Figtree', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
