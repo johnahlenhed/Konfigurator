@@ -1,16 +1,18 @@
-.section {
-  display: grid;
-  grid-template-columns: 130px 130px minmax(0, 1fr);
-  gap: 12px;
-  padding-top: 24px;
+.divider {
+  grid-column: 1 / -1;
   border-top: 1px solid var(--color-border);
-  text-align: left;
 }
 
 .left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   font-family: var(--font-inter);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-text-primary);
+  text-align: left;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .middle,

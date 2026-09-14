@@ -4,13 +4,14 @@ import { PartSelector } from './PartSelector';
 import { ColorPicker } from './ColorPicker';
 import { AddonBlock } from './AddonBlock';
 import { Section } from './Section';
+import styles from './ControlsPanel.module.css';
 
 export function ControlsPanel() {
   const selection = useConfiguratorStore((state) => state.selection);
   const visible = getVisibleSections(selection);
 
   return (
-    <>
+    <div className={styles.panel}>
       <Section title="Base">
         <PartSelector />
       </Section>
@@ -24,6 +25,6 @@ export function ControlsPanel() {
       {selection.addons.map((_, i) => (
         <AddonBlock key={i} index={i} />
       ))}
-    </>
+    </div>
   );
 }

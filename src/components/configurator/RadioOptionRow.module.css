@@ -8,6 +8,7 @@
   cursor: pointer;
   text-align: left;
   font: inherit;
+  white-space: nowrap;
 }
 
 .dot {
@@ -21,8 +22,8 @@
 }
 
 .dot[data-selected='true'] {
-  background: #2b1c0e;
-  border-color: #2b1c0e;
+  background: var(--color-text-primary);
+  border-color: var(--color-text-primary);
 }
 
 .labelGroup {
@@ -32,14 +33,13 @@
 
 .label {
   font-family: var(--font-inter);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-text-primary);
-  white-space: nowrap;
 }
 
 .subtext {
   font-family: var(--font-inter);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-text-primary);
   opacity: 0.5;
 }
