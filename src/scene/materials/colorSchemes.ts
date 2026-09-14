@@ -1,9 +1,5 @@
 import type { MaterialSlotKey } from "./materialConfig";
-
-export interface ColorScheme {
-    label: string;
-    slots: Partial<Record<MaterialSlotKey, string>>;
-}
+import type { ColorScheme } from "./colorScheme";
 
 // Current color schemes are placeholder HEX-values.
 // 'low' intentionally excluded — confirmed permanently fixed (see materialConfig.ts).
@@ -29,21 +25,16 @@ export const baseColorSchemes = {
             baseBottom: '#2C2C2C',
         } 
     },
-} as const
+} as const satisfies Record<string, ColorScheme<MaterialSlotKey>>
 
 export type BaseSchemeId = keyof typeof baseColorSchemes;
 
 // addonColorSchemes intentionally uses its own placeholder type —
 // not real MaterialSlotKey yet, since no addon GLB/materials exist.
 // Do NOT pass these to applyColorScheme until an addon slot config exists.
-interface PlaceholderAddonScheme {
-    label: string;
-    slots: Record<string, string>;
-}
-
-export const addonColorSchemes: Record<string, PlaceholderAddonScheme> = {
+export const addonColorSchemes = {
     classic: { label: 'Classic', slots: { addonPaint: '#2C2C2C' } },
     bright: { label: 'Bright', slots: { addonPaint: '#F1C40F' } },
-}
+} as const satisfies Record<string, ColorScheme>
 
 export type AddonSchemeId = keyof typeof addonColorSchemes;
