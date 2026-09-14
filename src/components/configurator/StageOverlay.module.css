@@ -1,10 +1,10 @@
 .logo {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: 8px;
+  left: 8px;
   font-family: var(--font-gantari);
-  font-size: 128px;
-  font-weight: 700;
+  font-size: 110px;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -2px;
   color: var(--color-text-primary);
@@ -13,11 +13,11 @@
 
 .description {
   position: absolute;
-  bottom: 96px;
+  bottom: 64px;
   left: 24px;
-  max-width: 320px;
+  max-width: 280px;
   font-family: var(--font-figtree);
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.5;
   color: var(--color-text-info);
   pointer-events: none;
