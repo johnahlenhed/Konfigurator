@@ -1,5 +1,5 @@
 import { useGLTF, useAnimations, Html } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
 import { Mesh } from "three";
@@ -7,8 +7,10 @@ import { animationGroups } from "./animations/animationGroups";
 import { applyColorScheme } from "./materials/applyMaterial";
 import { baseColorSchemes } from "./materials/colorSchemes";
 import { getMaterialName } from "./materials/materialSlots";
+import { PartSwap } from "./parts/PartSwap";
+import { SOCKET_ADDON_1, SOCKET_ADDON_2 } from "./parts/socketNames";
 
-const model = "/models/Mixer_fixad.glb";
+const model = "/models/Mixer_final.glb";
 
 export function Model() {
   const { scene, animations } = useGLTF(model);
@@ -43,6 +45,14 @@ export function Model() {
         }}
         onPointerOut={() => setHovered(null)}
       />
+
+      {/* Test rig: one PartSwap per socket, so both can be toggled independently */}
+      <Suspense fallback={null}>
+        <PartSwap scene={scene} socketName={SOCKET_ADDON_1} debugCubePosition={[-1, 3, 0]} />
+      </Suspense>
+      <Suspense fallback={null}>
+        <PartSwap scene={scene} socketName={SOCKET_ADDON_2} debugCubePosition={[1, 3, 0]} />
+      </Suspense>
 
       <Html fullscreen style={{ pointerEvents: "none" }}>
         <button

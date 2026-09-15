@@ -13,7 +13,11 @@ export function attachSocket(
     part: THREE.Object3D, 
     socket: { position: THREE.Vector3; quaternion: THREE.Quaternion }) {
 
-    // Copy rather than assign, so we don't accidentally share the same Vector3/Quaternion instance between socket and part
+    // Intentionally does NOT copy socket.scale. Empties in the source
+    // files have non-uniform baked scale (e.g. [0.64, 0.60, 0.06]) that
+    // reflects how large the artist drew the Empty in Blender — not a
+    // scale factor meant to apply to attached geometry. Copying it would
+    // squash/stretch the part unevenly per axis.
     part.position.copy(socket.position);
     part.quaternion.copy(socket.quaternion)
 }

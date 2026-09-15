@@ -4,23 +4,34 @@ import * as THREE from "three";
 import { getSocket } from "./getSocket";
 import { detachPart } from "./detachPart";
 import { attachSocket } from "./attachSocket";
+import { getAnchorOffset } from "./getAnchorOffset";
 
-// TEMPORARY: hardcoded test parts until real assets + naming convention land
-// Files intentionally not yet added to public/models — swap will 404 until then.
-const TEST_PARTS: Record<string, string> = {
-    lidWood: '/models/lidWood.glb',
-    lidMetal: '/models/lidMetal.glb'
+const ADDON_PARTS: Record<string, string> = {
+    option1: '/models/Mixer_option1.glb',
+    option2: '/models/Mixer_option2.glb',
+    speaker: '/models/Mixer_speaker.glb',
+    speaker2: '/models/Mixer_speaker2.glb',
 };
+
+const ADDON_KEYS = Object.keys(ADDON_PARTS);
+
+const ANCHOR_NODES: Record<string, string> = {
+    option2: 'baseOption2',
+    speaker: 'baseSpeaker',
+    speaker2: 'baseSpeaker2',
+    // option1 has no anchor node, so it will be positioned at the socket's origin
+}
 
 type PartSwapProps = {
     scene: THREE.Object3D; // The loaded base model's scene, to find sockets in
-    socketName: string; // Example: socketLid
+    socketName: string; // Example: SOCKET_ADDON_1 or SOCKET_ADDON_2, to find the correct socket in the base model
+    debugCubePosition?: [number, number, number]; // Dev-only: lets multiple PartSwap instances render non-overlapping test cubes
 };
 
-export function PartSwap({ scene, socketName }: PartSwapProps) {
+export function PartSwap({ scene, socketName, debugCubePosition = [0, 3, 0] }: PartSwapProps) {
     // Which part is currently selected — temporary local state until Zustand store exists to drive this instead.
     // TODO: replace with Zustand store once finished
-    const [selectedPart, setSelectedPart] = useState<string>('lidWood');
+    const [selectedPart, setSelectedPart] = useState<string>('option1');
 
     // A persistent container that holds whichever part is currently
     // attached. Using a ref (not state) because we're mutating the
@@ -32,7 +43,7 @@ export function PartSwap({ scene, socketName }: PartSwapProps) {
 
     // Loads the GLB for whichever part is currently selected.
     // Automatically re-loads when `selectedPart` changes.
-    const { scene: partScene } = useGLTF(TEST_PARTS[selectedPart]);
+    const { scene: partScene } = useGLTF(ADDON_PARTS[selectedPart]);
 
     useEffect(() => {
         // Find where this part should be positioned in the base model.
@@ -47,9 +58,14 @@ export function PartSwap({ scene, socketName }: PartSwapProps) {
 
         // Clone the loaded part so each instance is independent — avoids sharing geometry/transform with the cached GLB.
         const clone = partScene.clone();
+        const anchorName = ANCHOR_NODES[selectedPart];
+        const anchorOffset = anchorName ? getAnchorOffset(clone, anchorName) : null;
 
         // Position and rotate the clone to match the socket's transform.
         attachSocket(clone, socket);
+        if (anchorOffset) {
+            clone.position.sub(anchorOffset); // re-center the whole clone to local origin first
+        }
 
         // Add the newly positioned part into the persistent group, and remember it so it can be removed on the next swap.
         groupRef.current.add(clone);
@@ -64,9 +80,12 @@ export function PartSwap({ scene, socketName }: PartSwapProps) {
 
             {/* Temporary dev controls, remove once wired to real UI/state */}
             <mesh
-                position={[0, 3, 0]}
-                onClick={() => 
-                    setSelectedPart((prev) => (prev === 'lidWood' ? 'lidMetal' : 'lidWood'))
+                position={debugCubePosition}
+                onClick={() =>
+                    setSelectedPart((prev) => {
+                        const currentIndex = ADDON_KEYS.indexOf(prev);
+                        return ADDON_KEYS[(currentIndex + 1) % ADDON_KEYS.length];
+                    })
                 }
             >
                 <boxGeometry args={[0.3, 0.3, 0.3]} />
