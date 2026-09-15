@@ -1,25 +1,19 @@
 import { useGLTF, useAnimations, Html } from "@react-three/drei";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
-import { Mesh, Texture } from "three";
+import { Mesh } from "three";
 import { animationGroups } from "./animations/animationGroups";
-import { useThree } from "@react-three/fiber";
-import { setSlotTexture, applyColorScheme, setSlotColor } from "./materials/applyMaterial";
-import { createKTX2Loader } from "./textures/ktx2Loader";
+import { applyColorScheme } from "./materials/applyMaterial";
 import { baseColorSchemes } from "./materials/colorSchemes";
+import { getMaterialName } from "./materials/materialSlots";
 import { useConfiguratorStore } from "../store/configuratorStore";
 
-const model = "/models/Mixer_preview.glb";
+const model = "/models/Mixer_fixad.glb";
 
 export function Model() {
   const { scene, animations } = useGLTF(model);
   const { actions } = useAnimations(animations, scene);
-
-  // KTX2 texture loading setup
-  const { gl } = useThree();
-  const loader = useMemo(() => createKTX2Loader(gl), [gl]);
-  const [texture, setTexture] = useState<Texture | null>(null);
 
   // State to track hovered mesh name for debugging and part tracking purposes
   const [hovered, setHovered] = useState<string | null>(null);
@@ -27,14 +21,6 @@ export function Model() {
   const baseColor = useConfiguratorStore(
     (state) => state.selection.baseColor
   );
-
-  // Load the KTX2 texture when the component mounts
-  useEffect(() => {
-    loader.load('/textures/placeholder.ktx2', (tex) => {
-      console.log('Texture loaded:', tex, 'size:', tex.image?.width, tex.image?.height);
-      setTexture(tex);
-    });
-  }, [loader]);
 
   // Dev logging of mesh names and material names
   useEffect(() => {
@@ -52,20 +38,12 @@ export function Model() {
     });
   }, [actions]);
 
+  // Drive the base color scheme from the configurator selection
   useEffect(() => {
     if (!baseColor) return;
-
-    const colors = {
-      red: '#c33527',
-      blue: '#3568c8',
-      yellow: '#d9b62c',
-    };
-
-    setSlotColor(
-      scene,
-      'bodyRed',
-      colors[baseColor]
-    );
+    const scheme = baseColorSchemes[baseColor];
+    if (!scheme) return;
+    applyColorScheme(scene, scheme, getMaterialName);
   }, [scene, baseColor]);
 
   return (
@@ -82,21 +60,14 @@ export function Model() {
       <Html fullscreen style={{ pointerEvents: "none" }}>
         <button
           style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.monochrome)}
+          onClick={() => applyColorScheme(scene, baseColorSchemes.monochrome, getMaterialName)}
         >
           Test: Monochrome
         </button>
 
         <button
-          style={{ position: 'absolute', bottom: 100, left: 200, width: 150, height: 40, backgroundColor: '#2980B9', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => texture && setSlotTexture(scene, 'gain', texture)}
-        >
-          Test: Set Texture
-        </button>
-
-        <button
           style={{ position: 'absolute', bottom: 150, left: 200, width: 150, height: 40, backgroundColor: '#1aff00', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.classic)}
+          onClick={() => applyColorScheme(scene, baseColorSchemes.classic, getMaterialName)}
         >
           Test: Classic Scheme
         </button>

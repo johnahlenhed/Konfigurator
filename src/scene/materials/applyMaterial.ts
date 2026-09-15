@@ -1,27 +1,22 @@
 import { MeshStandardMaterial, Object3D, Texture } from 'three'
 import { traverseMeshes, getMaterials } from '../../utils/modelHelpers'
-import type { MaterialSlotKey } from './materialConfig'
-import { getMaterialName } from './materialSlots'
-import type { ColorScheme } from './colorSchemes'
 
-export function setSlotColor(root: Object3D, slot: MaterialSlotKey, hex: string) {
-    const targetName = getMaterialName(slot)
+export function setSlotColor(root: Object3D, materialName: string, hex: string) {
 
     traverseMeshes(root, (mesh) => {
         getMaterials(mesh).forEach((material) => {
-            if (material.name === targetName && material instanceof MeshStandardMaterial) {
+            if (material.name === materialName && material instanceof MeshStandardMaterial) {
                 material.color.set(hex)
             }
         })
     })
 }
 
-export function setSlotTexture(root: Object3D, slot: MaterialSlotKey, texture: Texture) {
-    const targetName = getMaterialName(slot)
+export function setSlotTexture(root: Object3D, materialName: string, texture: Texture) {
 
     traverseMeshes(root, (mesh) => {
         getMaterials(mesh).forEach((material) => {
-            if (material.name === targetName && material instanceof MeshStandardMaterial) {
+            if (material.name === materialName && material instanceof MeshStandardMaterial) {
                 material.map = texture
                 material.needsUpdate = true
             }
@@ -29,11 +24,14 @@ export function setSlotTexture(root: Object3D, slot: MaterialSlotKey, texture: T
     })
 }
 
-export function applyColorScheme(root: Object3D, colorScheme: ColorScheme) {
-    Object.entries(colorScheme.slots).forEach(([slot, hex]) => {
+export function applyColorScheme<T extends string>(
+    root: Object3D,
+    scheme: { slots: Partial<Record<T, string>> },
+    getMaterialName: (slot: T) => string
+) {
+    Object.entries(scheme.slots).forEach(([slot, hex]) => {
         if (hex) {
-            setSlotColor(root, slot as MaterialSlotKey, hex)
+            setSlotColor(root, getMaterialName(slot as T), hex as string)
         }
     })
 }
-

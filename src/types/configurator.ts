@@ -1,3 +1,4 @@
+export type MaterialSlot = string; // e.g. 'bodyBlack'
 export type BaseLevel = 'beginner' | 'enthusiast' | 'producer';
 export type AddonType = 'speaker' | 'mixer';
 export type AddonFunktion = 'funktion-1' | 'funktion-2';
