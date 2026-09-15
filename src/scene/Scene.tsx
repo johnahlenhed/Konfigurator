@@ -5,7 +5,6 @@ import { Model } from "./Model";
 import { Lighting } from "./Lighting";
 import { CameraSetup } from "./CameraSetup";
 import { AddonSwap } from "./parts/addonSwap";
-import { Center } from "@react-three/drei";
 
 export function Scene() {
   const [selectedAddon, setSelectedAddon] = useState<"option1" | "speaker">(

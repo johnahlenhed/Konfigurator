@@ -9,6 +9,8 @@ import { ADDON_PARTS } from "./ADDON_PARTS";
  * @returns the rendered Addon for the selected key
  */
 
+const baseModel = "/models/Mixer_final.glb"
+
 export function AddonSwap({ selectedAddon } : { selectedAddon: keyof typeof ADDON_PARTS }) {
 
   return (
