@@ -57,4 +57,22 @@ describe("attachSocket", () => {
         expect(part.position.y).toBe(2);
         expect(part.position.z).toBeCloseTo(0);
     })
+
+    it("applies the back-face offset along the socket's own local Z axis, not world Z", () => {
+        const part = new THREE.Object3D();
+
+        // A 90-degree rotation about Y turns the socket's local Z axis into world +X.
+        const socket = {
+            position: new THREE.Vector3(1, 2, 3),
+            quaternion: new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.PI / 2, 0)),
+            scale: new THREE.Vector3(1, 1, 0.5),
+        };
+
+        attachSocket(part, socket);
+
+        // The offset shows up on X (the socket's rotated local-Z direction), not Z.
+        expect(part.position.x).toBeCloseTo(0.5);
+        expect(part.position.y).toBeCloseTo(2);
+        expect(part.position.z).toBeCloseTo(3);
+    })
 })

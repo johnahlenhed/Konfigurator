@@ -64,7 +64,11 @@ export function PartSwap({ scene, socketName, debugCubePosition = [0, 3, 0] }: P
         // Position and rotate the clone to match the socket's transform.
         attachSocket(clone, socket);
         if (anchorOffset) {
-            clone.position.sub(anchorOffset); // re-center the whole clone to local origin first
+            // anchorOffset is in the clone's local space, but clone.position is a world-space
+            // value — rotate the offset into world space (via the rotation attachSocket just
+            // applied) before subtracting, so this still centers correctly on a rotated socket.
+            const worldAnchorOffset = anchorOffset.clone().applyQuaternion(clone.quaternion);
+            clone.position.sub(worldAnchorOffset); // re-center the whole clone to local origin first
         }
 
         // Add the newly positioned part into the persistent group, and remember it so it can be removed on the next swap.

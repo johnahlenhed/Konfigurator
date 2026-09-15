@@ -24,7 +24,10 @@ export function attachSocket(
     // socket.scale.z (verified on emptyUp/emptyDown in Mixer_final.glb),
     // meaning the empty's origin sits at mid-depth of the socket recess,
     // not on its back/mounting face. Parts are authored with their
-    // anchor node flush at local Z=0, so subtract scale.z to land parts
-    // on that back face instead of floating scale.z units proud of it.
-    part.position.z -= socket.scale.z;
+    // anchor node flush at local Z=0, so shift back by scale.z to land
+    // parts on that back face instead of floating scale.z units proud of it.
+    // Shifted along the socket's own local Z axis (via its quaternion),
+    // not world Z, so this still holds if a socket is ever non-axis-aligned.
+    const backFaceOffset = new THREE.Vector3(0, 0, socket.scale.z).applyQuaternion(socket.quaternion);
+    part.position.sub(backFaceOffset);
 }
