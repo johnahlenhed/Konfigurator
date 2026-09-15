@@ -1,14 +1,15 @@
-// KNOWN ISSUE: 'low' currently shares its underlying material (plasticBlack)
-// with fader/phones/volume in the source GLB. Per Matilda (see team chat,
-// 2026-09-12), only gain/mid/low should be user-colorable — if that's confirmed,
-// 'low' still needs CG to split it into its own material, otherwise changing
-// 'low' will also silently recolor fader/phones/volume.
-// Revisit once CG confirms + delivers the split material.
+// RESOLVED (Matilda, 2026-09-12): 'low' is intentionally fixed, matching
+// fader/phones/volume — not independently colorable. Confirmed against
+// Mixer_fixad.glb: all four now share 'plasticLightgreen' (the documented
+// fixed-forever color), not 'plasticBlack' as originally assumed.
+// Revisit only if this changes in a future team discussion.
 
 export const materialSlots = {
     gain: 'plasticOrange',
     mid: 'plasticGreen',
-    low: 'plasticBlack',
+    basePanel: 'metalGreen',
+    btnStart: 'metalOrange',
+    baseBottom: 'metalLightgreen',
 } as const;
 
 export type MaterialSlotKey = keyof typeof materialSlots;
