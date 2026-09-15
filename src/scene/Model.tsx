@@ -55,22 +55,6 @@ export function Model() {
         onPointerOut={() => setHovered(null)}
       />
 
-      <Html fullscreen style={{ pointerEvents: "none" }}>
-        <button
-          style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.monochrome, getMaterialName)}
-        >
-          Test: Monochrome
-        </button>
-
-        <button
-          style={{ position: 'absolute', bottom: 150, left: 200, width: 150, height: 40, backgroundColor: '#1aff00', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.classic, getMaterialName)}
-        >
-          Test: Classic Scheme
-        </button>
-      </Html>
-
       {hovered && (
         <Html fullscreen>
           <div style={{ position: 'absolute', top: 40, left: 40, color: 'white', background: 'black', padding: '4px 8px' }}>

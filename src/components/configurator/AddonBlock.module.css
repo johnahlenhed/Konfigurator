@@ -16,5 +16,18 @@
 }
 
 .chevron {
-  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chevronClosed,
+.chevronOpen {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
 }

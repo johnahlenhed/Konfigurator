@@ -5,6 +5,7 @@ import type { AddonType, AddonFunktion, BaseColor } from '../../types/configurat
 import { RadioOptionRow } from './RadioOptionRow';
 import { Section } from './Section';
 import styles from './AddonBlock.module.css';
+import chevronDownSmall from '../../assets/akar-icons_chevron-down-small.svg';
 
 interface AddonBlockProps {
   index: number;
@@ -34,9 +35,16 @@ export function AddonBlock({ index }: AddonBlockProps) {
         className={styles.header}
         onClick={() => setIsExpanded((open) => !open)}
         aria-expanded={isExpanded}
-      >
+        >
         <span>{currentType?.label}</span>
-        <span className={styles.chevron}>{isExpanded ? '⌃' : '⌄'}</span>
+        <span className={styles.chevron}>
+            <img
+            src={chevronDownSmall}
+            alt=""
+            className={isExpanded ? styles.chevronOpen : styles.chevronClosed}
+            aria-hidden="true"
+            />
+        </span>
       </button>
 
       {isExpanded && alternateType && (
