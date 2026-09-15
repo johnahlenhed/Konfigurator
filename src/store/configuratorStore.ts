@@ -3,7 +3,7 @@ import type {
   BaseColor,
   BaseLevel,
   AddonType,
-  AddonFunktion,
+  AddonModel,
   ConfiguratorSelection,
 } from '../types/configurator';
 import { defaultAddonTypes } from '../store/configOption';
@@ -13,7 +13,7 @@ interface ConfiguratorState {
   setBaseLevel: (level: BaseLevel) => void;
   setBaseColor: (color: BaseColor) => void;
   setAddonType: (index: number, type: AddonType) => void;
-  setAddonFunktion: (index: number, funktion: AddonFunktion) => void;
+  setAddonModel: (index: number, addonModel: AddonModel) => void;
   setAddonColor: (index: number, color: BaseColor) => void;
 }
 
@@ -31,7 +31,7 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
         baseLevel: level,
         addons: defaultAddonTypes[level].map((type, i) => ({
           type,
-          funktion: state.selection.addons[i]?.funktion ?? null,
+          addonModel: state.selection.addons[i]?.addonModel ?? null,
           color: state.selection.addons[i]?.color ?? null,
         })),
       },
@@ -43,14 +43,14 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
   setAddonType: (index, type) =>
     set((state) => {
       const addons = [...state.selection.addons];
-      addons[index] = { type, funktion: null, color: null };
+      addons[index] = { type, addonModel: null, color: null };
       return { selection: { ...state.selection, addons } };
     }),
 
-  setAddonFunktion: (index, funktion) =>
+  setAddonModel: (index, addonModel) =>
     set((state) => {
       const addons = [...state.selection.addons];
-      addons[index] = { ...addons[index], funktion };
+      addons[index] = { ...addons[index], addonModel };
       return { selection: { ...state.selection, addons } };
     }),
 

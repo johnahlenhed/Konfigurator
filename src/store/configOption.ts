@@ -1,4 +1,4 @@
-import type { BaseColor, BaseLevel, AddonType, AddonFunktion } from '../types/configurator';
+import type { BaseColor, BaseLevel, AddonType, AddonModel } from '../types/configurator';
 
 export const baseLevels: {
   id: BaseLevel;
@@ -39,22 +39,22 @@ export const addonTypes: { id: AddonType; label: string; price: number }[] = [
   { id: 'mixer', label: 'Mixer', price: 900 },
 ];
 
-export const getFunktionLabel = (
+export const getAddonModelLabel = (
   type: AddonType | null,
-  id: AddonFunktion
+  id: AddonModel
 ): string => {
   if (type === 'speaker') {
-    return id === 'funktion-1' ? 'SP-01' : 'SP-02';
+    return id === 'model-1' ? 'SP-01' : 'SP-02';
   }
   if (type === 'mixer') {
-    return id === 'funktion-1' ? 'MX-01' : 'MX-02';
+    return id === 'model-1' ? 'MX-01' : 'MX-02';
   }
-  return id === 'funktion-1' ? 'Model 1' : 'Model 2';
+  return id === 'model-1' ? 'Model 1' : 'Model 2';
 };
 
-export const funktionOptions: { id: AddonFunktion; label: string; price: number }[] = [
-  { id: 'funktion-1', label: 'Model 1', price: 300 },
-  { id: 'funktion-2', label: 'Model 2', price: 600 },
+export const addonModels: { id: AddonModel; label: string; price: number }[] = [
+  { id: 'model-1', label: 'Model 1', price: 300 },
+  { id: 'model-2', label: 'Model 2', price: 600 },
 ];
 
 // Default type per addon slot, keyed by base level. Order matters —

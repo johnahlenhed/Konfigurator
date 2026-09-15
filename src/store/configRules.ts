@@ -1,5 +1,5 @@
 import type { ConfiguratorSelection } from '../types/configurator';
-import { baseLevels, addonTypes, funktionOptions } from './configOption';
+import { baseLevels, addonTypes, addonModels } from './configOption';
 
 export function getVisibleSections(sel: ConfiguratorSelection) {
   return {
@@ -17,8 +17,8 @@ export function getTotalPrice(sel: ConfiguratorSelection): number {
 
   const addonsTotal = sel.addons.reduce((sum, addon) => {
     const type = addonTypes.find((t) => t.id === addon.type);
-    const funktion = funktionOptions.find((f) => f.id === addon.funktion);
-    return sum + (type?.price ?? 0) + (funktion?.price ?? 0);
+    const addonModel = addonModels.find((m) => m.id === addon.addonModel);
+    return sum + (type?.price ?? 0) + (addonModel?.price ?? 0);
   }, 0);
 
   return level.price + addonsTotal;

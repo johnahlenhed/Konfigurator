@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useConfiguratorStore } from '../../store/configuratorStore';
-import { addonTypes, funktionOptions, baseColors, getFunktionLabel } from '../../store/configOption';
-import type { AddonType, AddonFunktion, BaseColor } from '../../types/configurator';
+import { addonTypes, addonModels, baseColors, getAddonModelLabel } from '../../store/configOption';
+import type { AddonType, AddonModel, BaseColor } from '../../types/configurator';
 import { RadioOptionRow } from './RadioOptionRow';
 import { Section } from './Section';
 import styles from './AddonBlock.module.css';
@@ -16,7 +16,7 @@ export function AddonBlock({ index }: AddonBlockProps) {
 
   const selection = useConfiguratorStore((state) => state.selection);
   const setAddonType = useConfiguratorStore((state) => state.setAddonType);
-  const setAddonFunktion = useConfiguratorStore((state) => state.setAddonFunktion);
+  const setAddonModel = useConfiguratorStore((state) => state.setAddonModel);
   const setAddonColor = useConfiguratorStore((state) => state.setAddonColor);
 
   const addon = selection.addons[index];
@@ -63,14 +63,14 @@ export function AddonBlock({ index }: AddonBlockProps) {
       middle={
         <>
           <div className={styles.middleSpacer} />
-          {funktionOptions.map((f) => (
+          {addonModels.map((model) => (
             <RadioOptionRow
-                key={f.id}
-                label={getFunktionLabel(addon.type, f.id as AddonFunktion)}
-                selected={addon.funktion === f.id}
-                onSelect={() => setAddonFunktion(index, f.id as AddonFunktion)}
+              key={model.id}
+              label={getAddonModelLabel(addon.type, model.id as AddonModel)}
+              selected={addon.addonModel === model.id}
+              onSelect={() => setAddonModel(index, model.id as AddonModel)}
             />
-            ))}
+          ))}
         </>
       }
     >
