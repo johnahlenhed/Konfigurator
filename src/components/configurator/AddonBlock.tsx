@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useConfiguratorStore } from '../../store/configuratorStore';
-import { addonTypes, funktionOptions, baseColors } from '../../store/configOption';
+import { addonTypes, funktionOptions, baseColors, getFunktionLabel } from '../../store/configOption';
 import type { AddonType, AddonFunktion, BaseColor } from '../../types/configurator';
 import { RadioOptionRow } from './RadioOptionRow';
 import { Section } from './Section';
@@ -65,12 +65,12 @@ export function AddonBlock({ index }: AddonBlockProps) {
           <div className={styles.middleSpacer} />
           {funktionOptions.map((f) => (
             <RadioOptionRow
-              key={f.id}
-              label={f.label}
-              selected={addon.funktion === f.id}
-              onSelect={() => setAddonFunktion(index, f.id as AddonFunktion)}
+                key={f.id}
+                label={getFunktionLabel(addon.type, f.id as AddonFunktion)}
+                selected={addon.funktion === f.id}
+                onSelect={() => setAddonFunktion(index, f.id as AddonFunktion)}
             />
-          ))}
+            ))}
         </>
       }
     >

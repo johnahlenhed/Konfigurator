@@ -39,6 +39,19 @@ export const addonTypes: { id: AddonType; label: string; price: number }[] = [
   { id: 'mixer', label: 'Mixer', price: 900 },
 ];
 
+export const getFunktionLabel = (
+  type: AddonType | null,
+  id: AddonFunktion
+): string => {
+  if (type === 'speaker') {
+    return id === 'funktion-1' ? 'SP-01' : 'SP-02';
+  }
+  if (type === 'mixer') {
+    return id === 'funktion-1' ? 'MX-01' : 'MX-02';
+  }
+  return id === 'funktion-1' ? 'Model 1' : 'Model 2';
+};
+
 export const funktionOptions: { id: AddonFunktion; label: string; price: number }[] = [
   { id: 'funktion-1', label: 'Model 1', price: 300 },
   { id: 'funktion-2', label: 'Model 2', price: 600 },
