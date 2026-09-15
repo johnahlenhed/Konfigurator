@@ -7,6 +7,7 @@ import { animationGroups } from "./animations/animationGroups";
 import { applyColorScheme } from "./materials/applyMaterial";
 import { baseColorSchemes } from "./materials/colorSchemes";
 import { getMaterialName } from "./materials/materialSlots";
+import { useConfiguratorStore } from "../store/configuratorStore";
 
 const model = "/models/Mixer_fixad.glb";
 
@@ -16,6 +17,10 @@ export function Model() {
 
   // State to track hovered mesh name for debugging and part tracking purposes
   const [hovered, setHovered] = useState<string | null>(null);
+
+  const baseColor = useConfiguratorStore(
+    (state) => state.selection.baseColor
+  );
 
   // Dev logging of mesh names and material names
   useEffect(() => {
@@ -32,6 +37,14 @@ export function Model() {
       actions[clipName]?.play();
     });
   }, [actions]);
+
+  // Drive the base color scheme from the configurator selection
+  useEffect(() => {
+    if (!baseColor) return;
+    const scheme = baseColorSchemes[baseColor];
+    if (!scheme) return;
+    applyColorScheme(scene, scheme, getMaterialName);
+  }, [scene, baseColor]);
 
   return (
     <>
