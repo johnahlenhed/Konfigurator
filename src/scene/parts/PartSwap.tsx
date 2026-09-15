@@ -7,19 +7,19 @@ import { attachSocket } from "./attachSocket";
 import { getAnchorOffset } from "./getAnchorOffset";
 
 const ADDON_PARTS: Record<string, string> = {
-    option1: '/models/Mixer_option1.glb',
-    option2: '/models/Mixer_option2.glb',
-    speaker: '/models/Mixer_speaker.glb',
-    speaker2: '/models/Mixer_speaker2.glb',
+    option1: '/models/Mixer_option1_final.glb',
+    option2: '/models/Mixer_option2_final.glb',
+    speaker: '/models/Mixer_speaker_final.glb',
+    speaker2: '/models/Mixer_speaker2_final.glb',
 };
 
 const ADDON_KEYS = Object.keys(ADDON_PARTS);
 
 const ANCHOR_NODES: Record<string, string> = {
+    option1: 'baseOption1', 
     option2: 'baseOption2',
     speaker: 'baseSpeaker',
     speaker2: 'baseSpeaker2',
-    // option1 has no anchor node, so it will be positioned at the socket's origin
 }
 
 type PartSwapProps = {
@@ -70,6 +70,17 @@ export function PartSwap({ scene, socketName, debugCubePosition = [0, 3, 0] }: P
         // Add the newly positioned part into the persistent group, and remember it so it can be removed on the next swap.
         groupRef.current.add(clone);
         currentPartRef.current = clone;
+
+
+        // Debug: verify the anchor's actual world position after attaching
+        if (anchorName) {
+            const anchorNode = clone.getObjectByName(anchorName);
+            if (anchorNode) {
+                const actualWorldPos = new THREE.Vector3();
+                anchorNode.getWorldPosition(actualWorldPos);
+                console.log('anchor actual world position:', actualWorldPos, 'vs socket:', socket.position);
+            }
+        }
 
     }, [selectedPart, partScene, scene, socketName])
 
