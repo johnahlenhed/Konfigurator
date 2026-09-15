@@ -30,9 +30,8 @@ export const baseLevels: {
 ];
 
 export const baseColors: { id: BaseColor; label: string; hex: string }[] = [
-  { id: 'red', label: 'Red', hex: '#c33527' },
-  { id: 'blue', label: 'Blue', hex: '#3568c8' },
-  { id: 'yellow', label: 'Yellow', hex: '#d9b62c' },
+  { id: 'classic', label: 'Classic', hex: '#4dff00' },
+  { id: 'monochrome', label: 'Monochrome', hex: '#2C2C2C' },
 ];
 
 export const addonTypes: { id: AddonType; label: string; price: number }[] = [

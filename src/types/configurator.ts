@@ -15,4 +15,4 @@ export interface ConfiguratorSelection {
   addons: AddonSelection[];
 }
 
-export type BaseColor = 'red' | 'blue' | 'yellow';
+export type BaseColor = 'classic' | 'monochrome';
