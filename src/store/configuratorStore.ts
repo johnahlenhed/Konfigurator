@@ -50,7 +50,7 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
   setAddonFunktion: (index, funktion) =>
     set((state) => {
       const addons = [...state.selection.addons];
-      addons[index] = { ...addons[index], funktion, color: null };
+      addons[index] = { ...addons[index], funktion };
       return { selection: { ...state.selection, addons } };
     }),
 

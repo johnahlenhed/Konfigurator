@@ -5,7 +5,7 @@
   font-family: var(--font-gantari);
   font-size: 110px;
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.75;
   letter-spacing: -2px;
   color: var(--color-text-primary);
   pointer-events: none;
@@ -17,7 +17,7 @@
   left: 24px;
   max-width: 280px;
   font-family: var(--font-figtree);
-  font-size: 18px;
+  font-size: 12px;
   line-height: 1.5;
   color: var(--color-text-info);
   pointer-events: none;

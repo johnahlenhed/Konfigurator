@@ -40,8 +40,8 @@ export const addonTypes: { id: AddonType; label: string; price: number }[] = [
 ];
 
 export const funktionOptions: { id: AddonFunktion; label: string; price: number }[] = [
-  { id: 'funktion-1', label: 'Funktion 1', price: 300 },
-  { id: 'funktion-2', label: 'Funktion 2', price: 600 },
+  { id: 'funktion-1', label: 'Model 1', price: 300 },
+  { id: 'funktion-2', label: 'Model 2', price: 600 },
 ];
 
 // Default type per addon slot, keyed by base level. Order matters —
