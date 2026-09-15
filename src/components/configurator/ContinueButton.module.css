@@ -1,0 +1,27 @@
+.button {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 320px;
+  padding: 18px 40px;
+  text-align: center;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+  border: none;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.button:disabled {
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+  opacity: 0.6;
+  cursor: default;
+}
