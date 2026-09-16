@@ -1,10 +1,38 @@
-import { Canvas } from "@react-three/fiber";
-// import { Center } from '@react-three/drei'
-import { Suspense, useState } from "react";
-import { Model } from "./Model";
-import { Lighting } from "./Lighting";
-import { CameraSetup } from "./CameraSetup";
-import { AddonSwap } from "./parts/addonSwap";
+import { Canvas } from '@react-three/fiber'
+import { Center, useGLTF } from '@react-three/drei'
+import { Suspense } from 'react'
+import { Model } from './Model'
+import { Lighting } from './Lighting'
+import { CameraSetup } from './CameraSetup'
+import { PartSwap } from './parts/PartSwap'
+import { SOCKET_ADDON_1, SOCKET_ADDON_2 } from './parts/socketNames'
+
+const BASE_MODEL_PATH = '/models/Mixer_final.glb';
+
+function SceneContent() {
+  const { scene, animations } = useGLTF(BASE_MODEL_PATH)
+
+  return (
+    <>
+      {/* Only the base model is centered — its bounding box must stay
+          stable regardless of what's currently attached at a socket. */}
+      <Center>
+        <Model scene={scene} animations={animations} />
+      </Center>
+
+      {/* Addons render OUTSIDE Center, as true siblings. If they were
+          inside, a distant or misplaced addon would shift Center's
+          bounding-box calculation — which would shift the base model,
+          and therefore the sockets, under it. */}
+      <Suspense fallback={null}>
+        <PartSwap scene={scene} socketName={SOCKET_ADDON_1} debugCubePosition={[-1, 3, 0]} />
+      </Suspense>
+      <Suspense fallback={null}>
+        <PartSwap scene={scene} socketName={SOCKET_ADDON_2} debugCubePosition={[1, 3, 0]} />
+      </Suspense>
+    </>
+  )
+}
 
 export function Scene() {
   const [selectedAddon, setSelectedAddon] = useState<"option1" | "speaker">(
@@ -17,18 +45,13 @@ export function Scene() {
 
   return (
     <Canvas>
-      <Lighting
-        ambientIntensity={1.5}
-        directionalIntensity={3}
-        directionalPosition={[7, 7, 9]}
-      />
+      <Lighting ambientIntensity={1.5} directionalIntensity={3} directionalPosition={[7, 7, 9]} />
       <CameraSetup position={[0, 6, 10]} />
-      {/* <Center> */}
-        <Suspense fallback={null}>
-          <AddonSwap selectedAddon={selectedAddon} />
-          <Model onSwapAddon={toggleAddon} />
-        </Suspense>
-      {/* </Center> */}
+      <Suspense fallback={null}>
+        <SceneContent />
+      </Suspense>
     </Canvas>
   );
 }
+
+useGLTF.preload(BASE_MODEL_PATH)

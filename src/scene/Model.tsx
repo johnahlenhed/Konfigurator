@@ -1,46 +1,29 @@
-import { useGLTF, useAnimations, Html } from "@react-three/drei";
-import { useEffect, useMemo, useState } from "react";
+import { useAnimations, Html } from "@react-three/drei";
+import { useEffect, useState } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import type { ThreeEvent } from "@react-three/fiber";
-import { Mesh, Texture } from "three";
+import * as THREE from "three";
 import { animationGroups } from "./animations/animationGroups";
-import { useThree } from "@react-three/fiber";
-import { setSlotTexture, applyColorScheme } from "./materials/applyMaterial";
-import { createKTX2Loader } from "./textures/ktx2Loader";
+import { applyColorScheme } from "./materials/applyMaterial";
 import { baseColorSchemes } from "./materials/colorSchemes";
+import { getMaterialName } from "./materials/materialSlots";
 
-const model = "/models/Mixer_final.glb";
+type ModelProps = {
+  scene: THREE.Object3D;
+  animations: THREE.AnimationClip[];
+};
 
-export function Model({ onSwapAddon } : { onSwapAddon: () => void }) {
-  const { scene, animations } = useGLTF(model);
+export function Model({ scene, animations }: ModelProps) {
   const { actions } = useAnimations(animations, scene);
-
-  // KTX2 texture loading setup
-  const { gl } = useThree();
-  const loader = useMemo(() => createKTX2Loader(gl), [gl]);
-  const [texture, setTexture] = useState<Texture | null>(null);
-
-  // State to track hovered mesh name for debugging and part tracking purposes
   const [hovered, setHovered] = useState<string | null>(null);
 
-  // Load the KTX2 texture when the component mounts
-  useEffect(() => {
-    loader.load('/textures/placeholder.ktx2', (tex) => {
-      console.log('Texture loaded:', tex, 'size:', tex.image?.width, tex.image?.height);
-      setTexture(tex);
-    });
-  }, [loader]);
-
-  // Dev logging of mesh names and material names
   useEffect(() => {
     traverseMeshes(scene, (mesh) => {
       getMaterials(mesh).forEach((mat) => console.log(mesh.name, mat.name));
     });
-
     console.log("Available animations: ", Object.keys(actions));
   }, [scene, actions]);
 
-  // Play animations automatically
   useEffect(() => {
     Object.values(animationGroups).flat().forEach((clipName) => {
       actions[clipName]?.play();
@@ -53,7 +36,7 @@ export function Model({ onSwapAddon } : { onSwapAddon: () => void }) {
         object={scene}
         onPointerOver={(e: ThreeEvent<PointerEvent>) => {
           e.stopPropagation();
-          if (e.object instanceof Mesh) setHovered(e.object.name);
+          if (e.object instanceof THREE.Mesh) setHovered(e.object.name);
         }}
         onPointerOut={() => setHovered(null)}
       />
@@ -61,30 +44,16 @@ export function Model({ onSwapAddon } : { onSwapAddon: () => void }) {
       <Html fullscreen style={{ pointerEvents: "none" }}>
         <button
           style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.monochrome)}
+          onClick={() => applyColorScheme(scene, baseColorSchemes.monochrome, getMaterialName)}
         >
           Test: Monochrome
         </button>
 
         <button
-          style={{ position: 'absolute', bottom: 100, left: 200, width: 150, height: 40, backgroundColor: '#2980B9', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => texture && setSlotTexture(scene, 'gain', texture)}
-        >
-          Test: Set Texture
-        </button>
-
-        <button
           style={{ position: 'absolute', bottom: 150, left: 200, width: 150, height: 40, backgroundColor: '#1aff00', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.classic)}
+          onClick={() => applyColorScheme(scene, baseColorSchemes.classic, getMaterialName)}
         >
           Test: Classic Scheme
-        </button>
-        
-        <button
-          style={{ position: 'absolute', bottom: 150, left: 200, width: 150, height: 40, backgroundColor: '#b31794', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => onSwapAddon()}
-        >
-          Test: Swap addon
         </button>
       </Html>
 
@@ -98,5 +67,3 @@ export function Model({ onSwapAddon } : { onSwapAddon: () => void }) {
     </>
   );
 }
-
-useGLTF.preload(model);
