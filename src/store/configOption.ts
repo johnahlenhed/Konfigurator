@@ -70,6 +70,6 @@ export const addonModels: { id: AddonModel; label: string; price: number }[] = [
 // index 0 is the first slot to appear, index 1 the second.
 export const defaultAddonTypes: Record<BaseLevel, AddonType[]> = {
   beginner: [],
-  enthusiast: ['mixer'],
+  enthusiast: ['speaker'], // matches the Enthusiast description above: "matched with a dedicated speaker unit"
   producer: ['speaker', 'mixer'],
 };

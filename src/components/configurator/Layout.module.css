@@ -24,7 +24,8 @@
   background: var(--color-bg);
 }
 
-.controlsPanel:hover {
+.controlsPanel:hover,
+.controlsPanel:focus-within {
   width: 440px;
 }
 

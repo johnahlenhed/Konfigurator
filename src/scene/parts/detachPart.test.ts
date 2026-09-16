@@ -15,24 +15,22 @@ describe("detachPart", () => {
         expect(scene.children.includes(part)).toBe(false);
     });
 
-    it("disposes geometry on meshes, but not materials", () => {
-        // A real Mesh (not just Object3D) is needed here, since disposal logic only runs on nodes that are instances of THREE.Mesh.
+    it("does not dispose geometry or material on meshes", () => {
+        // A real Mesh (not just Object3D) is needed here, since geometry/material only exist on THREE.Mesh instances.
         const geometry = new THREE.BoxGeometry();
         const material = new THREE.MeshStandardMaterial();
         const mesh = new THREE.Mesh(geometry, material);
 
-        // Spies that check whether .dispose() was actually called, without needing to inspect internal GPU/memory state directly.
+        // Spies that check whether .dispose() was called, without needing to inspect internal GPU/memory state directly.
         const disposeGeoSpy = vi.spyOn(geometry, 'dispose');
         const disposeMatSpy = vi.spyOn(material, 'dispose');
 
         detachPart(mesh);
 
-        // Geometry is generally not shared across parts, so it's safe to free here.
-        expect(disposeGeoSpy).toHaveBeenCalled();
-
-        // Materials/textures are intentionally left alone — they're commonly shared
-        // with the base model or other parts (see the NOTE in detachPart.ts), so
-        // disposing them here could invalidate a resource still in use elsewhere.
+        // Geometry and materials are commonly shared with useGLTF's cached original
+        // (Object3D.clone() doesn't deep-clone them), so disposing either here would
+        // corrupt that shared cache. See the NOTE in detachPart.ts.
+        expect(disposeGeoSpy).not.toHaveBeenCalled();
         expect(disposeMatSpy).not.toHaveBeenCalled();
     })
 })
