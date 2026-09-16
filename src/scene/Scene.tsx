@@ -35,14 +35,6 @@ function SceneContent() {
 }
 
 export function Scene() {
-  const [selectedAddon, setSelectedAddon] = useState<"option1" | "speaker">(
-    "option1",
-  );
-
-  const toggleAddon = () => {
-    setSelectedAddon((prev) => (prev === "option1" ? "speaker" : "option1"));
-  };
-
   return (
     <Canvas>
       <Lighting ambientIntensity={1.5} directionalIntensity={3} directionalPosition={[7, 7, 9]} />
