@@ -1,6 +1,6 @@
 # Mixer Option 1 Final – scenbeskrivning
 
-**Fil:** `Mixer_option1_final(1).glb`  
+**Fil:** `Mixer_option1_final.glb`  
 **Format:** GLB / glTF  
 **GLB-version:** 2
 

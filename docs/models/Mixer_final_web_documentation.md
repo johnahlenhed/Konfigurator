@@ -1,6 +1,6 @@
 # Mixer – GLB Scene Documentation
 
-**Fil:** `Mixer_final(1).glb`  
+**Fil:** `Mixer_final.glb`  
 **Format:** glTF 2.0 / GLB  
 **Syfte:** Dokumentation för webbutvecklare som ska använda modellen på webben.
 
