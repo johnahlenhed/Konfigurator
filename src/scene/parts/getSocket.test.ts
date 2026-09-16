@@ -9,13 +9,17 @@ describe('getSocket', () => {
         const socket = new THREE.Object3D();
         socket.name = 'socketLid';
         socket.position.set(0, 1, 0);
+        socket.scale.set(1, 1, 0.5);
         scene.add(socket);
 
         // Call the function under test with a matching name
         const result = getSocket(scene, 'socketLid');
-        
+
         // Confirm the returned position matches what we set on the mock socket
         expect(result?.position.y).toBe(1);
+
+        // Confirm world scale is also returned — attachSocket needs scale.z to find the socket's back face
+        expect(result?.scale.z).toBe(0.5);
     });
 
     it('returns null and warns for missing socket', () => {

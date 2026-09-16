@@ -14,7 +14,5 @@ import * as THREE from "three";
  * app's lifetime, no manual disposal is needed for GLTF-sourced content.
  */
 export function detachPart(part: THREE.Object3D) {
-    // Unlink the part from its parent in the scene graph.
-    // Optional chaining handles the case where the part was never added, (e.g. already detached, or attach failed silently).
     part.parent?.remove(part);
 }

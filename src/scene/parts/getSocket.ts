@@ -13,9 +13,11 @@ export function getSocket(scene: THREE.Object3D, socketName: string) {
 
     const position = new THREE.Vector3();
     const quaternion = new THREE.Quaternion();
+    const scale = new THREE.Vector3();
 
     found.getWorldPosition(position);
     found.getWorldQuaternion(quaternion);
+    found.getWorldScale(scale);
 
-    return { position, quaternion };
+    return { position, quaternion, scale };
 }
