@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useConfiguratorStore } from '../../store/configuratorStore';
-import { addonTypes, addonModels, baseColors, getAddonModelLabel } from '../../store/configOption';
-import type { AddonType, AddonModel, BaseColor } from '../../types/configurator';
+import { addonTypes, addonModels, addonColors, getAddonModelLabel } from '../../store/configOption';
+import type { AddonType, AddonModel, AddonColor } from '../../types/configurator';
 import { RadioOptionRow } from './RadioOptionRow';
 import { Section } from './Section';
 import styles from './AddonBlock.module.css';
@@ -74,13 +74,13 @@ export function AddonBlock({ index }: AddonBlockProps) {
         </>
       }
     >
-      {baseColors.map((c) => (
+      {addonColors.map((c) => (
         <RadioOptionRow
           key={c.id}
           label={c.label}
           colorHex={c.hex}
           selected={addon.color === c.id}
-          onSelect={() => setAddonColor(index, c.id as BaseColor)}
+          onSelect={() => setAddonColor(index, c.id as AddonColor)}
         />
       ))}
     </Section>

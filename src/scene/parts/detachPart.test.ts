@@ -15,7 +15,7 @@ describe("detachPart", () => {
         expect(scene.children.includes(part)).toBe(false);
     });
 
-    it("disposes geometry and material on meshes", () => {
+    it("disposes geometry on meshes, but not materials", () => {
         // A real Mesh (not just Object3D) is needed here, since disposal logic only runs on nodes that are instances of THREE.Mesh.
         const geometry = new THREE.BoxGeometry();
         const material = new THREE.MeshStandardMaterial();
@@ -27,8 +27,12 @@ describe("detachPart", () => {
 
         detachPart(mesh);
 
-        // Confirms both geometry and material cleanup ran — the core guarantee this function exists to provide (no memory leaks).
+        // Geometry is generally not shared across parts, so it's safe to free here.
         expect(disposeGeoSpy).toHaveBeenCalled();
-        expect(disposeMatSpy).toHaveBeenCalled();
+
+        // Materials/textures are intentionally left alone — they're commonly shared
+        // with the base model or other parts (see the NOTE in detachPart.ts), so
+        // disposing them here could invalidate a resource still in use elsewhere.
+        expect(disposeMatSpy).not.toHaveBeenCalled();
     })
 })

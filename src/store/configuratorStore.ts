@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type {
   BaseColor,
+  AddonColor,
   BaseLevel,
   AddonType,
   AddonModel,
@@ -14,7 +15,7 @@ interface ConfiguratorState {
   setBaseColor: (color: BaseColor) => void;
   setAddonType: (index: number, type: AddonType) => void;
   setAddonModel: (index: number, addonModel: AddonModel) => void;
-  setAddonColor: (index: number, color: BaseColor) => void;
+  setAddonColor: (index: number, color: AddonColor) => void;
 }
 
 export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
@@ -29,11 +30,18 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
       selection: {
         ...state.selection,
         baseLevel: level,
-        addons: defaultAddonTypes[level].map((type, i) => ({
-          type,
-          addonModel: state.selection.addons[i]?.addonModel ?? null,
-          color: state.selection.addons[i]?.color ?? null,
-        })),
+        addons: defaultAddonTypes[level].map((type, i) => {
+          // Only carry over the previous model/color if this slot's type
+          // hasn't changed — otherwise they belonged to a different addon
+          // (e.g. the old speaker's color) and shouldn't pre-fill the new one.
+          const previous = state.selection.addons[i];
+          const sameType = previous?.type === type;
+          return {
+            type,
+            addonModel: sameType ? previous.addonModel : null,
+            color: sameType ? previous.color : null,
+          };
+        }),
       },
     })),
 
