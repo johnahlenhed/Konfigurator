@@ -43,7 +43,7 @@ export function Scene() {
         <SceneContent />
       </Suspense>
     </Canvas>
-  )
+  );
 }
 
 useGLTF.preload(BASE_MODEL_PATH)

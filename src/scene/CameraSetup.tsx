@@ -13,7 +13,7 @@ export function CameraSetup({
   position = [-5, 1, 10],
   fov = 45,
   minDistance = 2,
-  maxDistance = 10,
+  maxDistance = 20,
   enableOrbit = true,
 }: CameraSetupProps) {
   return (
