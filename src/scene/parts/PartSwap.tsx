@@ -9,6 +9,7 @@ import { detachPart } from "./detachPart";
 import { attachSocket } from "./attachSocket";
 import { getAnchorOffset } from "./getAnchorOffset";
 import { useFrame } from "@react-three/fiber";
+import { getMaterials, traverseMeshes } from "../../utils/modelHelpers";
 
 type AddonKey = `${AddonType}-${AddonModel}`;
 
@@ -106,6 +107,12 @@ function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPa
 
         // Clone the loaded part so each instance is independent — avoids sharing geometry/transform with the cached GLB.
         const clone = partScene.clone();
+
+        // Log the clone's meshes and materials for debugging.
+        traverseMeshes(clone, (mesh) => {
+            getMaterials(mesh).forEach((mat) => console.log('Addon part:', mesh.name, mat.name));
+        });
+
         const anchorOffset = getAnchorOffset(clone, anchorName);
 
         // Position and rotate the clone to match the socket's transform.

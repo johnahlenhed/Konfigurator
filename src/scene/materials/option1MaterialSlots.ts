@@ -1,0 +1,1 @@
+// Add material slots when CG delivers new export.

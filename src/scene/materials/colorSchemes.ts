@@ -1,29 +1,39 @@
 import type { MaterialSlotKey } from "./materialConfig";
 import type { ColorScheme } from "./colorScheme";
 
-// Current color schemes are placeholder HEX-values.
 // 'low' intentionally excluded — confirmed permanently fixed (see materialConfig.ts).
 export const baseColorSchemes = {
-    classic: { 
-        label: 'Classic', 
+    'pike-green': { 
+        label: 'Pike Green', 
         slots: { 
-            gain: '#4dff00', 
-            mid: '#ff0000',
-            basePanel: '#27AE60',
-            btnStart: '#E67E22',
-            baseBottom: '#95A5A6',
+            gain: '#aca946', 
+            mid: '#aca946',
+            basePanel: '#aca946',
+            btnStart: '#aca946',
+            baseBottom: '#aca946',
         }
     },
 
-    monochrome: { 
-        label: 'Monochrome', 
+    'strike-orange': { 
+        label: 'Strike Orange', 
         slots: { 
-            gain: '#494545', 
-            mid: '#2C2C2C',
-            basePanel: '#523f3f',
-            btnStart: '#2C2C2C',
-            baseBottom: '#2C2C2C',
+            gain: '#D08E21', 
+            mid: '#D08E21',
+            basePanel: '#D08E21',
+            btnStart: '#D08E21',
+            baseBottom: '#D08E21',
         } 
+    },
+
+    'cod-white': {
+        label: 'Cod White',
+        slots: {
+            gain: '#F8F6E5',
+            mid: '#F8F6E5',
+            basePanel: '#F8F6E5',
+            btnStart: '#F8F6E5',
+            baseBottom: '#F8F6E5',
+        }
     },
 } as const satisfies Record<string, ColorScheme<MaterialSlotKey>>
 

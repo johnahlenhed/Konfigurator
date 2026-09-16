@@ -30,13 +30,15 @@ export const baseLevels: {
 ];
 
 export const baseColors: { id: BaseColor; label: string; hex: string }[] = [
-  { id: 'classic', label: 'Classic', hex: '#4dff00' },
-  { id: 'monochrome', label: 'Monochrome', hex: '#2C2C2C' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#4dff00' },
+  { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
+  { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];
 
 export const addonColors: { id: AddonColor; label: string; hex: string }[] = [
-  { id: 'classic', label: 'Classic', hex: '#2C2C2C' },
-  { id: 'bright', label: 'Bright', hex: '#F1C40F' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#4dff00' },
+  { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
+  { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];
 
 export const addonTypes: { id: AddonType; label: string; price: number }[] = [
