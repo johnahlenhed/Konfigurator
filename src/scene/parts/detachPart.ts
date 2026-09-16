@@ -1,4 +1,3 @@
-// src/scene/parts/detachPart.ts
 import * as THREE from "three";
 
 /**
