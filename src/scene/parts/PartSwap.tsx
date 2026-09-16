@@ -8,6 +8,7 @@ import { getSocket } from "./getSocket";
 import { detachPart } from "./detachPart";
 import { attachSocket } from "./attachSocket";
 import { getAnchorOffset } from "./getAnchorOffset";
+import { useFrame } from "@react-three/fiber";
 import { getMaterials, traverseMeshes } from "../../utils/modelHelpers";
 
 type AddonKey = `${AddonType}-${AddonModel}`;
@@ -74,6 +75,14 @@ type AddonPartProps = {
     anchorName: string;
 };
 
+// Apply ease to addon animation for smoother transition
+function easeOutCubic(t: number): number {
+    return 1 - Math.pow(1 - t, 3);
+}
+
+const FLY_IN_DISTANCE = 1;
+const FLY_IN_DURATION = 0.6;
+
 // Loads and attaches one addon GLB at a socket. Split out from PartSwap so it
 // can be mounted/unmounted based on whether a type+model is actually selected
 // — useGLTF needs a real path, so it can't run when there's nothing to load.
@@ -81,6 +90,14 @@ function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPa
     // Loads the GLB for whichever part is currently selected.
     // Automatically re-loads when `glbPath` changes.
     const { scene: partScene } = useGLTF(glbPath);
+
+    const hasEnteredRef = useRef(false);
+    const introRef = useRef<{
+        clone: THREE.Object3D;
+        from: THREE.Vector3;
+        to: THREE.Vector3;
+        elapsed: number;
+    } | null>(null);
 
     useEffect(() => {
         // Find where this part should be positioned in the base model.
@@ -107,14 +124,41 @@ function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPa
             clone.position.sub(worldAnchorOffset); // re-center the whole clone to local origin first
         }
 
+        const finalPosition = clone.position.clone();
+
+        if (!hasEnteredRef.current) {
+            // First time: start from right and fly in to finalPosition. Never further than base models right edge.
+            const startPosition = finalPosition.clone().add(new THREE.Vector3(FLY_IN_DISTANCE, 0, 0));
+            clone.position.copy(startPosition);
+            introRef.current = { clone, from: startPosition, to: finalPosition, elapsed: 0 };
+        } else {
+            // Addon already visable, toggle between choices should not trigger new animation
+            introRef.current = null;
+        }
+
         groupRef.current.add(clone);
 
         // Detach this part before attaching the next one (re-run on prop change) or on unmount
         // (e.g. the user clears the model/type for this slot).
         return () => {
+            introRef.current = null;
             detachPart(clone);
         };
     }, [scene, socketName, groupRef, glbPath, partScene, anchorName])
+
+    useFrame((_, delta) => {
+        const intro = introRef.current;
+        if (!intro) return;
+
+        intro.elapsed += delta;
+        const t = Math.min(intro.elapsed / FLY_IN_DURATION, 1);
+        intro.clone.position.lerpVectors(intro.from, intro.to, easeOutCubic(t));
+
+        if (t >= 1) {
+            hasEnteredRef.current = true;
+            introRef.current = null;
+        }
+    })
 
     return null;
 }
