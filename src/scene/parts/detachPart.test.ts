@@ -27,8 +27,9 @@ describe("detachPart", () => {
 
         detachPart(mesh);
 
-        // Confirms cleanup did NOT run — geometry/material are commonly shared with useGLTF's cached original
-        // (Object3D.clone() doesn't deep-clone them), so disposing here would corrupt that cache. See detachPart.ts.
+        // Geometry and materials are commonly shared with useGLTF's cached original
+        // (Object3D.clone() doesn't deep-clone them), so disposing either here would
+        // corrupt that shared cache. See the NOTE in detachPart.ts.
         expect(disposeGeoSpy).not.toHaveBeenCalled();
         expect(disposeMatSpy).not.toHaveBeenCalled();
     })

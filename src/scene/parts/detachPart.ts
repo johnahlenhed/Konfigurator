@@ -3,13 +3,15 @@ import * as THREE from "three";
 /**
  * Removes a previously attached part from its parent.
  *
- * NOTE: Does NOT dispose geometry or materials. Both are commonly
- * shared with the cached original from useGLTF (Object3D.clone()
- * does not deep-clone geometry/material — only new transform nodes
- * are created, referencing the same underlying data). Disposing here
- * would corrupt the shared cache for any other/future use of the
- * same GLB. Since useGLTF's cache is meant to live for the app's
- * lifetime, no manual disposal is needed for GLTF-sourced content.
+ * NOTE: Does NOT dispose geometry, materials, or textures. Parts are
+ * created via `partScene.clone()` on a `useGLTF`-loaded scene — Object3D.clone()
+ * duplicates the node hierarchy/transforms only, it does NOT deep-clone
+ * geometry or materials, so a clone's meshes still reference the same
+ * BufferGeometry/Material instances as useGLTF's cached original (and any
+ * other clone of the same GLB). Disposing them here would corrupt that
+ * shared cache — e.g. reselecting the same model again would render with
+ * disposed/empty geometry. Since useGLTF's cache is meant to live for the
+ * app's lifetime, no manual disposal is needed for GLTF-sourced content.
  */
 export function detachPart(part: THREE.Object3D) {
     part.parent?.remove(part);

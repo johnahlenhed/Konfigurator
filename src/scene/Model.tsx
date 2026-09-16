@@ -7,6 +7,7 @@ import { animationGroups } from "./animations/animationGroups";
 import { applyColorScheme } from "./materials/applyMaterial";
 import { baseColorSchemes } from "./materials/colorSchemes";
 import { getMaterialName } from "./materials/materialSlots";
+import { useConfiguratorStore } from "../store/configuratorStore";
 
 type ModelProps = {
   scene: THREE.Object3D;
@@ -16,6 +17,7 @@ type ModelProps = {
 export function Model({ scene, animations }: ModelProps) {
   const { actions } = useAnimations(animations, scene);
   const [hovered, setHovered] = useState<string | null>(null);
+  const baseColor = useConfiguratorStore((state) => state.selection.baseColor);
 
   useEffect(() => {
     traverseMeshes(scene, (mesh) => {
@@ -30,6 +32,13 @@ export function Model({ scene, animations }: ModelProps) {
     });
   }, [actions]);
 
+  useEffect(() => {
+    if (!baseColor) return;
+    const scheme = baseColorSchemes[baseColor];
+    if (!scheme) return;
+    applyColorScheme(scene, scheme, getMaterialName);
+  }, [scene, baseColor]);
+
   return (
     <>
       <primitive
@@ -40,22 +49,6 @@ export function Model({ scene, animations }: ModelProps) {
         }}
         onPointerOut={() => setHovered(null)}
       />
-
-      <Html fullscreen style={{ pointerEvents: "none" }}>
-        <button
-          style={{ position: 'absolute', bottom: 50, left: 200, width: 150, height: 40, backgroundColor: '#ff1500', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.monochrome, getMaterialName)}
-        >
-          Test: Monochrome
-        </button>
-
-        <button
-          style={{ position: 'absolute', bottom: 150, left: 200, width: 150, height: 40, backgroundColor: '#1aff00', color: 'white', border: 'none', borderRadius: 4, pointerEvents: 'auto' }}
-          onClick={() => applyColorScheme(scene, baseColorSchemes.classic, getMaterialName)}
-        >
-          Test: Classic Scheme
-        </button>
-      </Html>
 
       {hovered && (
         <Html fullscreen>

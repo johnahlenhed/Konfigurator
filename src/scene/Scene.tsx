@@ -25,10 +25,10 @@ function SceneContent() {
           bounding-box calculation — which would shift the base model,
           and therefore the sockets, under it. */}
       <Suspense fallback={null}>
-        <PartSwap scene={scene} socketName={SOCKET_ADDON_1} debugCubePosition={[-1, 3, 0]} />
+        <PartSwap scene={scene} socketName={SOCKET_ADDON_1} addonIndex={0} />
       </Suspense>
       <Suspense fallback={null}>
-        <PartSwap scene={scene} socketName={SOCKET_ADDON_2} debugCubePosition={[1, 3, 0]} />
+        <PartSwap scene={scene} socketName={SOCKET_ADDON_2} addonIndex={1} />
       </Suspense>
     </>
   )
@@ -43,7 +43,7 @@ export function Scene() {
         <SceneContent />
       </Suspense>
     </Canvas>
-  );
+  )
 }
 
 useGLTF.preload(BASE_MODEL_PATH)
