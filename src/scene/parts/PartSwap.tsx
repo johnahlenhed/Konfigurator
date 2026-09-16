@@ -28,15 +28,6 @@ const ANCHOR_NODES: Record<AddonKey, string> = {
     'mixer-model-2': 'baseOption2',
 };
 
-const ADDON_KEYS = Object.keys(ADDON_PARTS);
-
-const ANCHOR_NODES: Record<string, string> = {
-    option1: 'baseOption1', 
-    option2: 'baseOption2',
-    speaker: 'baseSpeaker',
-    speaker2: 'baseSpeaker2',
-}
-
 type PartSwapProps = {
     scene: THREE.Object3D; // The loaded base model's scene, to find sockets in
     socketName: string; // Example: SOCKET_ADDON_1 or SOCKET_ADDON_2, to find the correct socket in the base model
