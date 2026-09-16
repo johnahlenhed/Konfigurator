@@ -17,10 +17,10 @@ type AddonKey = `${AddonType}-${AddonModel}`;
 // as SP-01/SP-02/MX-01/MX-02 — see getAddonModelLabel in configOption.ts) map
 // onto the GLB files' own option1/option2/speaker/speaker2 naming.
 const ADDON_GLB_PATHS: Record<AddonKey, string> = {
-    'speaker-model-1': '/models/Mixer_speaker_final.glb',
-    'speaker-model-2': '/models/Mixer_speaker2_final.glb',
-    'mixer-model-1': '/models/Mixer_option1_final.glb',
-    'mixer-model-2': '/models/Mixer_option2_final.glb',
+    'speaker-model-1': '/models/Mixer_speaker_color.glb',
+    'speaker-model-2': '/models/Mixer_speaker2_color.glb',
+    'mixer-model-1': '/models/Mixer_option1_color.glb',
+    'mixer-model-2': '/models/Mixer_option2_color.glb',
 };
 
 const ANCHOR_NODES: Record<AddonKey, string> = {

@@ -1,1 +1,3 @@
-// Add color schemes when CG delivers new export.
+import { createAddonColorSchemes } from './createAddonColorSchemes';
+
+export const option2ColorSchemes = createAddonColorSchemes(['panel'] as const);
