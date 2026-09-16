@@ -1,9 +1,12 @@
-import { Scene } from './scene/Scene'
+import { Layout } from './components/configurator/Layout';
+import { Scene } from './scene/Scene';
 
-export function ConfiguratorCanvas() {
+function App() {
   return (
-    <>
+    <Layout>
       <Scene />
-    </>
-  )
+    </Layout>
+  );
 }
+
+export default App;

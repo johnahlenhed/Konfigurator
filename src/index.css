@@ -25,6 +25,22 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --color-bg-stage: #ffffff;
+  --color-bg-panel: #f1f1f1;
+  --color-text-primary: #2b1c0e;
+  --color-text-muted: #9c9c9c;
+  --color-border: #dcdcdc;
+  --color-bg: #FAFAFA;
+  --color-text-primary: #342000;
+  --color-text-info: #000000;
+  --color-button-bg: #342000;
+  --color-button-text: #f8f6e5;
+  --color-border: #dcdcdc;
+
+  --font-inter: 'Inter', sans-serif;
+  --font-gantari: 'Gantari', sans-serif;
+  --font-figtree: 'Figtree', sans-serif;
+
   @media (max-width: 1024px) {
     font-size: 16px;
   }
@@ -34,7 +50,7 @@
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;
-    --bg: #16171d;
+    --bg: #050050;
     --border: #2e303a;
     --code-bg: #1f2028;
     --accent: #c084fc;
@@ -51,19 +67,21 @@
 }
 
 #root {
-  width: 1126px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
   border-inline: 1px solid var(--border);
+  height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  justify-content: center;
 }
 
 body {
   margin: 0;
+  height: 100%;
 }
 
 h1,
@@ -108,4 +126,10 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
 }
