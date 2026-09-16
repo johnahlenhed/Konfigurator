@@ -75,17 +75,6 @@ export function PartSwap({ scene, socketName, debugCubePosition = [0, 3, 0] }: P
         groupRef.current.add(clone);
         currentPartRef.current = clone;
 
-
-        // Debug: verify the anchor's actual world position after attaching
-        if (anchorName) {
-            const anchorNode = clone.getObjectByName(anchorName);
-            if (anchorNode) {
-                const actualWorldPos = new THREE.Vector3();
-                anchorNode.getWorldPosition(actualWorldPos);
-                console.log('anchor actual world position:', actualWorldPos, 'vs socket:', socket.position);
-            }
-        }
-
     }, [selectedPart, partScene, scene, socketName])
 
     return (
