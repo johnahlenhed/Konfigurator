@@ -162,4 +162,4 @@ Inga texturer hittades.
 - För interaktiva delar är unika och tydliga namn särskilt viktiga.
 
 ## 7. Sammanfattning
-`Mixer_option1_final(1).glb` innehåller **35 noder**, **35 meshes**, **10 material**, **0 texturer** och **35 animationer**. Dokumentationen beskriver scenens struktur, objekt, hierarki, material, texturer och animationer utifrån den uppladdade GLB-filen.
+`Mixer_option1_final.glb` innehåller **35 noder**, **35 meshes**, **10 material**, **0 texturer** och **35 animationer**. Dokumentationen beskriver scenens struktur, objekt, hierarki, material, texturer och animationer utifrån den uppladdade GLB-filen.
