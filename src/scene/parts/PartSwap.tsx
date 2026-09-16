@@ -17,149 +17,169 @@ type AddonKey = `${AddonType}-${AddonModel}`;
 // as SP-01/SP-02/MX-01/MX-02 — see getAddonModelLabel in configOption.ts) map
 // onto the GLB files' own option1/option2/speaker/speaker2 naming.
 const ADDON_GLB_PATHS: Record<AddonKey, string> = {
-    'speaker-model-1': '/models/Mixer_speaker_final.glb',
-    'speaker-model-2': '/models/Mixer_speaker2_final.glb',
-    'mixer-model-1': '/models/Mixer_option1_final.glb',
-    'mixer-model-2': '/models/Mixer_option2_final.glb',
+  "speaker-model-1": "/models/Mixer_speaker_final.glb",
+  "speaker-model-2": "/models/Mixer_speaker2_final.glb",
+  "mixer-model-1": "/models/Mixer_option1_final.glb",
+  "mixer-model-2": "/models/Mixer_option2_final.glb",
 };
 
 const ANCHOR_NODES: Record<AddonKey, string> = {
-    'speaker-model-1': 'baseSpeaker',
-    'speaker-model-2': 'baseSpeaker2',
-    'mixer-model-1': 'baseOption1',
-    'mixer-model-2': 'baseOption2',
+  "speaker-model-1": "baseSpeaker",
+  "speaker-model-2": "baseSpeaker2",
+  "mixer-model-1": "baseOption1",
+  "mixer-model-2": "baseOption2",
 };
 
 type PartSwapProps = {
-    scene: THREE.Object3D; // The loaded base model's scene, to find sockets in
-    socketName: string; // Example: SOCKET_ADDON_1 or SOCKET_ADDON_2, to find the correct socket in the base model
-    addonIndex: number; // Which slot in selection.addons[] this socket corresponds to
+  scene: THREE.Object3D; // The loaded base model's scene, to find sockets in
+  socketName: string; // Example: SOCKET_ADDON_1 or SOCKET_ADDON_2, to find the correct socket in the base model
+  addonIndex: number; // Which slot in selection.addons[] this socket corresponds to
 };
 
 export function PartSwap({ scene, socketName, addonIndex }: PartSwapProps) {
-    // A persistent container that holds whichever part is currently
-    // attached. Using a ref (not state) because we're mutating the
-    // 3D scene graph directly, not triggering React re-renders. Kept here
-    // (rather than in AddonPart below) so it survives AddonPart unmounting
-    // when the slot has no type/model selected yet.
-    const groupRef = useRef(new THREE.Group());
+  // A persistent container that holds whichever part is currently
+  // attached. Using a ref (not state) because we're mutating the
+  // 3D scene graph directly, not triggering React re-renders. Kept here
+  // (rather than in AddonPart below) so it survives AddonPart unmounting
+  // when the slot has no type/model selected yet.
+  const groupRef = useRef(new THREE.Group());
 
-    const addon = useConfiguratorStore((state) => state.selection.addons[addonIndex]);
-    const addonKey: AddonKey | null =
-        addon?.type && addon.addonModel ? `${addon.type}-${addon.addonModel}` : null;
+  const addon = useConfiguratorStore(
+    (state) => state.selection.addons[addonIndex],
+  );
+  const addonKey: AddonKey | null =
+    addon?.type && addon.addonModel
+      ? `${addon.type}-${addon.addonModel}`
+      : null;
 
-    return (
-        <>
-            {/* Renders the group (and whatever part is currently inside it) */}
-            <primitive object={groupRef.current} />
+  return (
+    <>
+      {/* Renders the group (and whatever part is currently inside it) */}
+      <primitive object={groupRef.current} />
 
-            {/* Nothing to attach until both a type and a model are chosen for this slot. */}
-            {addonKey && (
-                <AddonPart
-                    scene={scene}
-                    socketName={socketName}
-                    groupRef={groupRef}
-                    glbPath={ADDON_GLB_PATHS[addonKey]}
-                    anchorName={ANCHOR_NODES[addonKey]}
-                />
-            )}
-        </>
-    )
+      {/* Nothing to attach until both a type and a model are chosen for this slot. */}
+      {addonKey && (
+        <AddonPart
+          scene={scene}
+          socketName={socketName}
+          groupRef={groupRef}
+          glbPath={ADDON_GLB_PATHS[addonKey]}
+          anchorName={ANCHOR_NODES[addonKey]}
+        />
+      )}
+    </>
+  );
 }
 
 type AddonPartProps = {
-    scene: THREE.Object3D;
-    socketName: string;
-    groupRef: RefObject<THREE.Group>;
-    glbPath: string;
-    anchorName: string;
+  scene: THREE.Object3D;
+  socketName: string;
+  groupRef: RefObject<THREE.Group>;
+  glbPath: string;
+  anchorName: string;
 };
 
 // Apply ease to addon animation for smoother transition
 function easeOutCubic(t: number): number {
-    return 1 - Math.pow(1 - t, 3);
+  return 1 - Math.pow(1 - t, 3);
 }
 
 const FLY_IN_DISTANCE = 1;
 const FLY_IN_DURATION = 0.6;
 
-
 // Loads and attaches one addon GLB at a socket. Split out from PartSwap so it
 // can be mounted/unmounted based on whether a type+model is actually selected
 // — useGLTF needs a real path, so it can't run when there's nothing to load.
-function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPartProps) {
-    // Loads the GLB for whichever part is currently selected.
-    // Automatically re-loads when `glbPath` changes.
-    const { scene: partScene } = useGLTF(glbPath);
+function AddonPart({
+  scene,
+  socketName,
+  groupRef,
+  glbPath,
+  anchorName,
+}: AddonPartProps) {
+  // Loads the GLB for whichever part is currently selected.
+  // Automatically re-loads when `glbPath` changes.
+  const { scene: partScene } = useGLTF(glbPath);
 
-    const hasEnteredRef = useRef(false);
-    const introRef = useRef<{
-        clone: THREE.Object3D;
-        from: THREE.Vector3;
-        to: THREE.Vector3;
-        elapsed: number;
-    } | null>(null);
+  const hasEnteredRef = useRef(false);
+  const introRef = useRef<{
+    clone: THREE.Object3D;
+    from: THREE.Vector3;
+    to: THREE.Vector3;
+    elapsed: number;
+  } | null>(null);
 
-    useEffect(() => {
-        // Find where this part should be positioned in the base model.
-        const socket = getSocket(scene, socketName);
-        if (!socket) return;
+  useEffect(() => {
+    // Find where this part should be positioned in the base model.
+    const socket = getSocket(scene, socketName);
+    if (!socket) return;
 
-        // Clone the loaded part so each instance is independent — avoids sharing geometry/transform with the cached GLB.
-        const clone = partScene.clone();
+    // Clone the loaded part so each instance is independent — avoids sharing geometry/transform with the cached GLB.
+    const clone = partScene.clone();
 
-        // Log the clone's meshes and materials for debugging.
-        traverseMeshes(clone, (mesh) => {
-            getMaterials(mesh).forEach((mat) => console.log('Addon part:', mesh.name, mat.name));
-        });
+    // Log the clone's meshes and materials for debugging.
+    traverseMeshes(clone, (mesh) => {
+      getMaterials(mesh).forEach((mat) =>
+        console.log("Addon part:", mesh.name, mat.name),
+      );
+    });
 
-        const anchorOffset = getAnchorOffset(clone, anchorName);
+    const anchorOffset = getAnchorOffset(clone, anchorName);
 
-        // Position and rotate the clone to match the socket's transform.
-        attachSocket(clone, socket);
-        if (anchorOffset) {
-            // anchorOffset is in the clone's local space, but clone.position is a world-space
-            // value — rotate the offset into world space (via the rotation attachSocket just
-            // applied) before subtracting, so this still centers correctly on a rotated socket.
-            const worldAnchorOffset = anchorOffset.clone().applyQuaternion(clone.quaternion);
-            clone.position.sub(worldAnchorOffset); // re-center the whole clone to local origin first
-        }
+    // Position and rotate the clone to match the socket's transform.
+    attachSocket(clone, socket);
+    if (anchorOffset) {
+      // anchorOffset is in the clone's local space, but clone.position is a world-space
+      // value — rotate the offset into world space (via the rotation attachSocket just
+      // applied) before subtracting, so this still centers correctly on a rotated socket.
+      const worldAnchorOffset = anchorOffset
+        .clone()
+        .applyQuaternion(clone.quaternion);
+      clone.position.sub(worldAnchorOffset); // re-center the whole clone to local origin first
+    }
 
-        const finalPosition = clone.position.clone();
+    const finalPosition = clone.position.clone();
 
-        if(!hasEnteredRef.current) {
-            // First time: start from right and fly in to finalPosition. Never further than base models right edge.
-            const startPostition = finalPosition.clone().add(new THREE.Vector3(FLY_IN_DISTANCE, 0, 0));
-            clone.position.copy(startPostition);
-            introRef.current = { clone, from: startPostition, to: finalPosition, elapsed: 0 };
-        } else {
-            // Addon already visable, toggle between choices should not trigger new animation
-            introRef.current = null;
-        }
+    if (!hasEnteredRef.current) {
+      // First time: start from right and fly in to finalPosition. Never further than base models right edge.
+      const startPosition = finalPosition
+        .clone()
+        .add(new THREE.Vector3(FLY_IN_DISTANCE, 0, 0));
+      clone.position.copy(startPosition);
+      introRef.current = {
+        clone,
+        from: startPosition,
+        to: finalPosition,
+        elapsed: 0,
+      };
+    } else {
+      // Addon already visable, toggle between choices should not trigger new animation
+      introRef.current = null;
+    }
 
-        groupRef.current.add(clone);
+    groupRef.current.add(clone);
 
-        // Detach this part before attaching the next one (re-run on prop change) or on unmount
-        // (e.g. the user clears the model/type for this slot).
-        return () => {
-            introRef.current = null;
-            detachPart(clone);
-        };
-    }, [scene, socketName, groupRef, glbPath, partScene, anchorName])
+    // Detach this part before attaching the next one (re-run on prop change) or on unmount
+    // (e.g. the user clears the model/type for this slot).
+    return () => {
+      introRef.current = null;
+      detachPart(clone);
+    };
+  }, [scene, socketName, groupRef, glbPath, partScene, anchorName]);
 
-    useFrame((_, delta) => {
-        const intro = introRef.current;
-        if (!intro) return;
+  useFrame((_, delta) => {
+    const intro = introRef.current;
+    if (!intro) return;
 
-        intro.elapsed += delta;
-        const t = Math.min(intro.elapsed / FLY_IN_DURATION, 1);
-        intro.clone.position.lerpVectors(intro.from, intro.to, easeOutCubic(t));
+    intro.elapsed += delta;
+    const t = Math.min(intro.elapsed / FLY_IN_DURATION, 1);
+    intro.clone.position.lerpVectors(intro.from, intro.to, easeOutCubic(t));
 
-        if (t >= 1) {
-            hasEnteredRef.current = true;
-            introRef.current = null;
-        }
-    })
+    if (t >= 1) {
+      hasEnteredRef.current = true;
+      introRef.current = null;
+    }
+  });
 
-    return null;
+  return null;
 }
