@@ -52,7 +52,18 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
   setAddonType: (index, type) =>
     set((state) => {
       const addons = [...state.selection.addons];
-      addons[index] = { type, addonModel: 'model-1', color: 'pike-green' };
+      const current = addons[index] ?? {
+        type: 'speaker',
+        addonModel: 'model-1',
+        color: 'pike-green',
+      };
+
+      addons[index] = {
+        type,
+        addonModel: current.addonModel ?? 'model-1',
+        color: current.color ?? 'pike-green',
+      };
+
       return { selection: { ...state.selection, addons } };
     }),
 
