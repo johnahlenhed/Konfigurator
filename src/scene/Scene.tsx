@@ -16,7 +16,7 @@ function SceneContent() {
     <>
       {/* Only the base model is centered — its bounding box must stay
           stable regardless of what's currently attached at a socket. */}
-      <Center>
+      <Center rotation={[0, 0.2, 0]}>
         <Model scene={scene} animations={animations} />
       </Center>
 
@@ -45,7 +45,7 @@ export function Scene() {
     >
       <ContactShadows position={[0, -1.23, 0]} opacity={0.6} scale={10} blur={2} far={3} />
       <Lighting />
-      <CameraSetup position={[0, 0, 10]} />
+      <CameraSetup />
       <Suspense fallback={null}>
         <SceneContent />
       </Suspense>

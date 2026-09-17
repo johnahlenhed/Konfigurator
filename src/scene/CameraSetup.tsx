@@ -6,8 +6,8 @@ type CameraSetupProps = {
 };
 
 export function CameraSetup({
-  position = [-5, 1, 10],
-  fov = 45,
+  position = [0, 0, 10],
+  fov = 20,
 }: CameraSetupProps) {
   return (
     <>
