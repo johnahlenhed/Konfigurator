@@ -38,7 +38,10 @@ export function Scene() {
   return (
     <Canvas 
       shadows
-      gl={{ antialias: true, toneMappingExposure: 1.1 }}
+      gl={{ antialias: true }}
+      onCreated={({ gl }) => { 
+        gl.toneMappingExposure = 1.1 
+      }}
     >
       <ContactShadows position={[0, -1.23, 0]} opacity={0.6} scale={10} blur={2} far={3} />
       <Lighting />
