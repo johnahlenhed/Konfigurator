@@ -4,8 +4,8 @@ import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
 import * as THREE from "three";
 import { animationGroups } from "./animations/animationGroups";
 import { applyColorScheme } from "./materials/applyMaterial";
+import { getMaterialName } from "./materials/materialConfig";
 import { baseColorSchemes } from "./materials/colorSchemes";
-import { getMaterialName } from "./materials/materialSlots";
 import { useConfiguratorStore } from "../store/configuratorStore";
 
 type ModelProps = {
@@ -19,12 +19,12 @@ export function Model({ scene, animations }: ModelProps) {
 
   // ONLY IN DEV: Log mesh, materials and animations
   useEffect(() => {
-    if (import.meta.env.DEV) {
-      traverseMeshes(scene, (mesh) => {
-        getMaterials(mesh).forEach((mat) => console.log(mesh.name, mat.name));
-      });
-      console.log("Available animations: ", Object.keys(actions));
-    }
+      if (import.meta.env.DEV) {
+          traverseMeshes(scene, (mesh) => {
+              getMaterials(mesh).forEach((mat) => console.log(mesh.name, mat.name));
+          });
+          console.log("Available animations: ", Object.keys(actions));
+      }
   }, [scene, actions]);
 
   // Enable cast- and receiveShadow for every mesh
