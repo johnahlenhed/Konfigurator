@@ -3,8 +3,7 @@ import { createMaterialConfig } from './createMaterialConfig';
 
 export const speaker2MaterialConfig = createMaterialConfig({
     panel: 'addonMetalgreen',
-    buttons: ['addonPlasticgreen', 'addonPlasticorange', 'addonPlasticlightgreen'],
-    speakerPanel: 'addonPlasticwhite',
+    buttons: ['addonPlasticgreen'],
 });
 
 export type Speaker2MaterialSlotKey = keyof typeof speaker2MaterialConfig.slots;

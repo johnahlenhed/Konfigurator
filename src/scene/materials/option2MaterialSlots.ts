@@ -2,7 +2,7 @@ import { createMaterialConfig } from './createMaterialConfig.js'
 
 export const option2MaterialSlots = createMaterialConfig({
     panel: 'addonMetallightgreen',
-    buttons: ['addonPlasticgreen', 'addonPlasticlightgreen', 'addonPlasticorange'],
+    buttons: ['addonPlasticgreen'],
 });
 
 export type Option2MaterialSlotKey = keyof typeof option2MaterialSlots.slots;
