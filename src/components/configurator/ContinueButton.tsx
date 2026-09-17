@@ -12,7 +12,6 @@ export function ContinueButton() {
     <button
       type="button"
       className={styles.button}
-      onClick={() => console.log('Continue clicked', selection)}
     >
       Continue – {priceFormatter.format(price)} kr
     </button>

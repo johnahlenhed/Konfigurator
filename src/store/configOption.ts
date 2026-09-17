@@ -59,10 +59,6 @@ export const getAddonModelLabel = (
   return id === 'model-1' ? 'Model 1' : 'Model 2';
 };
 
-// TODO: pricing is currently shared across addon types (speaker vs mixer),
-// but getAddonModelLabel shows they have distinct display labels per type
-// (SP-01/SP-02 vs MX-01/MX-02) — per-type pricing may be needed. Confirm
-// with the team before changing this data shape.
 export const addonModels: { id: AddonModel; label: string; price: number }[] = [
   { id: 'model-1', label: 'Model 1', price: 300 },
   { id: 'model-2', label: 'Model 2', price: 600 },
