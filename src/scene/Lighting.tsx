@@ -1,5 +1,7 @@
-import { Environment } from "@react-three/drei";
+import { Environment, useEnvironment } from "@react-three/drei";
 import { Component, Suspense, type ReactNode } from "react";
+
+useEnvironment.preload({ preset: "city" });
 
 // Environment's HDR fetch throws a real error (not just a loading promise)
 // when it fails, so Suspense alone can't stop that from crashing the scene —
