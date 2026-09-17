@@ -9,7 +9,7 @@ import { detachPart } from "./detachPart";
 import { attachSocket } from "./attachSocket";
 import { cloneWithMaterials, getAnchorOffset } from "./getAnchorOffset";
 import { useFrame } from "@react-three/fiber";
-import { getMaterials, traverseMeshes } from "../../utils/modelHelpers";
+import { traverseMeshes } from "../../utils/modelHelpers";
 import { speakerColorSchemes } from "../materials/speakerColorSchemes";
 import { getSpeakerMaterialName } from "../materials/speakerMaterialSlots";
 import { speaker2ColorSchemes } from "../materials/speaker2ColorSchemes";
