@@ -81,7 +81,7 @@ function easeOutCubic(t: number): number {
 }
 
 const FLY_IN_DISTANCE = 1;
-const FLY_IN_DURATION = 0.6;
+const FLY_IN_DURATION = 1.5;
 
 // Loads and attaches one addon GLB at a socket. Split out from PartSwap so it
 // can be mounted/unmounted based on whether a type+model is actually selected
