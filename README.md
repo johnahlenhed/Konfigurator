@@ -65,6 +65,3 @@ Colors are applied at runtime, never baked into a GLB. Each model file (base + e
 - Feature branches are unrestricted
 - `main` is the Vercel production branch; `dev` gets its own persistent preview deployment
 
-## A note on GLB deliveries
-
-3D assets come from the CG team as GLB exports, usually paired with a `_scenbeskrivning.md` documentation file. Always verify a new delivery's actual structure (node names, material assignments, animation clip names) against its documentation before building against it — mismatches between the two have happened more than once.
