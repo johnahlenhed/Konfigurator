@@ -36,7 +36,10 @@ function SceneContent() {
 
 export function Scene() {
   return (
-    <Canvas shadows>
+    <Canvas 
+      shadows
+      gl={{ antialias: true, toneMappingExposure: 1.1 }}
+    >
       <ContactShadows position={[0, -1.23, 0]} opacity={0.6} scale={10} blur={2} far={3} />
       <Lighting />
       <CameraSetup position={[0, 0, 10]} />

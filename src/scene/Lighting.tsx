@@ -8,8 +8,8 @@ type LightingProps = {
 
 export function Lighting({
   ambientIntensity = 0.3,
-  directionalPosition = [10, 10, 7],
-  directionalIntensity = 2,
+  directionalPosition = [6, 8, 5],
+  directionalIntensity = 1.5,
 }: LightingProps) {
   return (
     <>
@@ -20,9 +20,10 @@ export function Lighting({
         intensity={directionalIntensity}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
+        shadow-bias={-0.0001}
       />
 
-      <Environment preset="city" environmentIntensity={1} />
+      <Environment preset="city" environmentIntensity={1.4} />
     </>
   );
 }
