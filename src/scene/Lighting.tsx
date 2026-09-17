@@ -1,3 +1,5 @@
+import { Environment } from "@react-three/drei";
+
 type LightingProps = {
   ambientIntensity?: number;
   directionalPosition?: [number, number, number];
@@ -5,14 +7,22 @@ type LightingProps = {
 };
 
 export function Lighting({
-  ambientIntensity = 0.6,
-  directionalPosition = [5, 5, 5],
-  directionalIntensity = 1,
+  ambientIntensity = 0.3,
+  directionalPosition = [10, 10, 7],
+  directionalIntensity = 2,
 }: LightingProps) {
   return (
     <>
       <ambientLight intensity={ambientIntensity} />
-      <directionalLight position={directionalPosition} intensity={directionalIntensity} />
+      <directionalLight
+        castShadow
+        position={directionalPosition}
+        intensity={directionalIntensity}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+
+      <Environment preset="city" environmentIntensity={1} />
     </>
   );
 }
