@@ -7,9 +7,25 @@ import type { AddonType, AddonModel } from "../../types/configurator";
 import { getSocket } from "./getSocket";
 import { detachPart } from "./detachPart";
 import { attachSocket } from "./attachSocket";
-import { getAnchorOffset } from "./getAnchorOffset";
+import { cloneWithMaterials, getAnchorOffset } from "./getAnchorOffset";
 import { useFrame } from "@react-three/fiber";
 import { getMaterials, traverseMeshes } from "../../utils/modelHelpers";
+import { speakerColorSchemes } from "../materials/speakerColorSchemes";
+import { getSpeakerMaterialName } from "../materials/speakerMaterialSlots";
+import { speaker2ColorSchemes } from "../materials/speaker2ColorSchemes";
+import { getSpeaker2MaterialName } from "../materials/speaker2MaterialSlots";
+import { applyColorScheme } from "../materials/applyMaterial";
+import type { ColorId } from "../materials/colorPalette";
+import { option1ColorSchemes } from "../materials/option1ColorSchemes";
+import { option2ColorSchemes } from "../materials/option2ColorSchemes";
+import { getOption2MaterialName } from "../materials/option2MaterialSlots";
+import { getOption1MaterialName } from "../materials/option1MaterialSlots";
+
+function toGenericResolver<T extends string>(
+    getMaterialName: (slot: T) => string[]
+): (slot: string) => string[] {
+    return (slot: string) => getMaterialName(slot as T);
+}
 
 type AddonKey = `${AddonType}-${AddonModel}`;
 
@@ -29,6 +45,16 @@ const ANCHOR_NODES: Record<AddonKey, string> = {
     'mixer-model-1': 'baseOption1',
     'mixer-model-2': 'baseOption2',
 };
+
+const ADDON_COLOR_CONFIG: Partial<Record<AddonKey, {
+    schemes: Record<ColorId, { label: string; color: string; slots: string[] }>;
+    getMaterialName: (slot: string) => string[];
+}>> = {
+    'speaker-model-1': { schemes: speakerColorSchemes, getMaterialName: toGenericResolver(getSpeakerMaterialName) },
+    'speaker-model-2': { schemes: speaker2ColorSchemes, getMaterialName: toGenericResolver(getSpeaker2MaterialName) },
+    'mixer-model-1': { schemes: option1ColorSchemes, getMaterialName: toGenericResolver(getOption1MaterialName) },
+    'mixer-model-2': { schemes: option2ColorSchemes, getMaterialName: toGenericResolver(getOption2MaterialName) },
+}
 
 type PartSwapProps = {
     scene: THREE.Object3D; // The loaded base model's scene, to find sockets in
@@ -61,6 +87,8 @@ export function PartSwap({ scene, socketName, addonIndex }: PartSwapProps) {
                     groupRef={groupRef}
                     glbPath={ADDON_GLB_PATHS[addonKey]}
                     anchorName={ANCHOR_NODES[addonKey]}
+                    addonKey={addonKey}
+                    addonIndex={addonIndex}
                 />
             )}
         </>
@@ -73,6 +101,8 @@ type AddonPartProps = {
     groupRef: RefObject<THREE.Group>;
     glbPath: string;
     anchorName: string;
+    addonKey: AddonKey;
+    addonIndex: number;
 };
 
 // Apply ease to addon animation for smoother transition
@@ -86,10 +116,11 @@ const FLY_IN_DURATION = 0.6;
 // Loads and attaches one addon GLB at a socket. Split out from PartSwap so it
 // can be mounted/unmounted based on whether a type+model is actually selected
 // — useGLTF needs a real path, so it can't run when there's nothing to load.
-function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPartProps) {
+function AddonPart({ scene, socketName, groupRef, glbPath, anchorName, addonKey, addonIndex }: AddonPartProps) {
     // Loads the GLB for whichever part is currently selected.
     // Automatically re-loads when `glbPath` changes.
     const { scene: partScene } = useGLTF(glbPath);
+    const addonColor = useConfiguratorStore((state) => state.selection.addons[addonIndex]?.color);
 
     const hasEnteredRef = useRef(false);
     const introRef = useRef<{
@@ -99,13 +130,15 @@ function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPa
         elapsed: number;
     } | null>(null);
 
+    const cloneRef = useRef<THREE.Object3D | null>(null);
+
     useEffect(() => {
         // Find where this part should be positioned in the base model.
         const socket = getSocket(scene, socketName);
         if (!socket) return;
 
         // Clone the loaded part so each instance is independent — avoids sharing geometry/transform with the cached GLB.
-        const clone = partScene.clone();
+        const clone = cloneWithMaterials(partScene);
 
         // Log the clone's meshes and materials for debugging.
         traverseMeshes(clone, (mesh) => {
@@ -140,11 +173,26 @@ function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPa
 
         // Detach this part before attaching the next one (re-run on prop change) or on unmount
         // (e.g. the user clears the model/type for this slot).
+        cloneRef.current = clone;
         return () => {
+            cloneRef.current = null;
             introRef.current = null;
             detachPart(clone);
         };
     }, [scene, socketName, groupRef, glbPath, partScene, anchorName])
+
+    useEffect(() => {
+        const clone = cloneRef.current;
+        if (!clone || !addonColor) return;
+
+        const config = ADDON_COLOR_CONFIG[addonKey];
+        if (!config) return;
+
+        const scheme = config.schemes[addonColor];
+        if (!scheme) return;
+
+        applyColorScheme(clone, scheme, config.getMaterialName);
+    }, [addonColor, addonKey])
 
     useFrame((_, delta) => {
         const intro = introRef.current;

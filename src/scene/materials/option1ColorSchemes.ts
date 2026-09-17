@@ -1,3 +1,3 @@
 import { createAddonColorSchemes } from './createAddonColorSchemes';
 
-export const option1ColorSchemes = createAddonColorSchemes(['panel'] as const);
+export const option1ColorSchemes = createAddonColorSchemes(['panel', 'buttons'] as const);

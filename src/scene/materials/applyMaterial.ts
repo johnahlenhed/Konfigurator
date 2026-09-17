@@ -28,9 +28,11 @@ export function setSlotTexture(root: Object3D, materialName: string, texture: Te
 export function applyColorScheme<T extends string>(
     root: Object3D,
     scheme: ColorScheme<T>,
-    getMaterialName: (slot: T) => string
+    getMaterialName: (slot: T) => string[]
 ) {
     scheme.slots.forEach((slot) => {
-        setSlotColor(root, getMaterialName(slot), scheme.color)
+        getMaterialName(slot).forEach((materialName) => {
+            setSlotColor(root, materialName, scheme.color)
+        })
     })
 }

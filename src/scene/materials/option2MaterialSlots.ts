@@ -1,7 +1,8 @@
 import { createMaterialConfig } from './createMaterialConfig.js'
 
 export const option2MaterialSlots = createMaterialConfig({
-    // Will be filled when documentation is available from CG.
+    panel: 'addonMetallightgreen',
+    buttons: ['addonPlasticgreen', 'addonPlasticlightgreen', 'addonPlasticorange'],
 });
 
 export type Option2MaterialSlotKey = keyof typeof option2MaterialSlots.slots;
