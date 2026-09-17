@@ -30,13 +30,15 @@ export const baseLevels: {
 ];
 
 export const baseColors: { id: BaseColor; label: string; hex: string }[] = [
-  { id: 'classic', label: 'Classic', hex: '#4dff00' },
-  { id: 'monochrome', label: 'Monochrome', hex: '#2C2C2C' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#ACA946' },
+  { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
+  { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];
 
 export const addonColors: { id: AddonColor; label: string; hex: string }[] = [
-  { id: 'classic', label: 'Classic', hex: '#2C2C2C' },
-  { id: 'bright', label: 'Bright', hex: '#F1C40F' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#ACA946' },
+  { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
+  { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];
 
 export const addonTypes: { id: AddonType; label: string; price: number }[] = [
@@ -57,19 +59,19 @@ export const getAddonModelLabel = (
   return id === 'model-1' ? 'Model 1' : 'Model 2';
 };
 
-// TODO: pricing is currently shared across addon types (speaker vs mixer),
-// but getAddonModelLabel shows they have distinct display labels per type
-// (SP-01/SP-02 vs MX-01/MX-02) — per-type pricing may be needed. Confirm
-// with the team before changing this data shape.
 export const addonModels: { id: AddonModel; label: string; price: number }[] = [
   { id: 'model-1', label: 'Model 1', price: 300 },
   { id: 'model-2', label: 'Model 2', price: 600 },
 ];
 
-// Default type per addon slot, keyed by base level. Order matters —
-// index 0 is the first slot to appear, index 1 the second.
-export const defaultAddonTypes: Record<BaseLevel, AddonType[]> = {
+export const defaultAddonSelections: Record<
+  BaseLevel,
+  Array<{ type: AddonType; addonModel: AddonModel | null; color: AddonColor | null }>
+> = {
   beginner: [],
-  enthusiast: ['speaker'], // matches the Enthusiast description above: "matched with a dedicated speaker unit"
-  producer: ['speaker', 'mixer'],
+  enthusiast: [{ type: 'speaker', addonModel: 'model-1', color: 'pike-green' }],
+  producer: [
+    { type: 'speaker', addonModel: 'model-1', color: 'pike-green' },
+    { type: 'mixer', addonModel: 'model-1', color: 'pike-green' },
+  ],
 };

@@ -14,11 +14,12 @@
 .description {
   position: absolute;
   bottom: 64px;
-  left: 24px;
+  left: 75px;
   max-width: 280px;
   font-family: var(--font-figtree);
   font-size: 12px;
   line-height: 1.5;
   color: var(--color-text-info);
   pointer-events: none;
+  text-align: left;
 }

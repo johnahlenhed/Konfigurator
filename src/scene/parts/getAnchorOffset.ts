@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { traverseMeshes, getMaterials } from "../../utils/modelHelpers";
 
 // Returns anchor.position as-is, i.e. local to the anchor's immediate parent.
 // That's only correct if `anchorNodeName` is a direct child of `root` (the
@@ -17,4 +18,22 @@ export function getAnchorOffset(root: THREE.Object3D, anchorNodeName: string): T
     }
 
     return anchor.position.clone();
+}
+
+/**
+ * Deep-clones each mesh's material(s) on top of Object3D.clone()'s shallow
+ * clone, so this instance's materials are independent and safe to mutate
+ * via setSlotColor without affecting other clones or the cached original.
+*/
+
+export function cloneWithMaterials(root: THREE.Object3D): THREE.Object3D {
+    const clone = root.clone();
+    traverseMeshes(clone, (mesh) => {
+        const materials = getMaterials(mesh);
+        if (materials.length === 0) return;
+        mesh.material = materials.length > 1
+            ? materials.map((m) => m.clone())
+            : materials[0].clone();
+    });
+    return clone;
 }

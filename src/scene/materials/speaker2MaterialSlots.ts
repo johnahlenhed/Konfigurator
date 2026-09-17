@@ -1,9 +1,10 @@
-export const speaker2MaterialSlots = {
-    panel: 'addPaint2',
-} as const;
+// speaker2MaterialSlots.ts
+import { createMaterialConfig } from './createMaterialConfig';
 
-export type Speaker2MaterialSlotKey = keyof typeof speaker2MaterialSlots;
+export const speaker2MaterialConfig = createMaterialConfig({
+    panel: 'addonMetalgreen',
+    buttons: ['addonPlasticgreen', 'addonPlasticorange', 'addonPlasticlightgreen'],
+});
 
-export function getSpeaker2MaterialName(slot: Speaker2MaterialSlotKey): string {
-    return speaker2MaterialSlots[slot]
-}
+export type Speaker2MaterialSlotKey = keyof typeof speaker2MaterialConfig.slots;
+export const getSpeaker2MaterialName = speaker2MaterialConfig.getMaterialName;
