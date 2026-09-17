@@ -75,3 +75,14 @@ export const defaultAddonTypes: Record<BaseLevel, AddonType[]> = {
   enthusiast: ['speaker'], // matches the Enthusiast description above: "matched with a dedicated speaker unit"
   producer: ['speaker', 'mixer'],
 };
+
+export const defaultAddonSelections: Record<BaseLevel, Array<{ type: AddonType; addonModel: AddonModel | null; color: AddonColor | null }>> = {
+  beginner: [],
+  enthusiast: [
+    { type: 'speaker', addonModel: 'model-1', color: null },
+  ],
+  producer: [
+    { type: 'speaker', addonModel: 'model-1', color: null },
+    { type: 'mixer', addonModel: 'model-1', color: null },
+  ],
+};

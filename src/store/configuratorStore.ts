@@ -7,7 +7,7 @@ import type {
   AddonModel,
   ConfiguratorSelection,
 } from '../types/configurator';
-import { defaultAddonTypes } from '../store/configOption';
+import { defaultAddonSelections } from '../store/configOption';
 
 interface ConfiguratorState {
   selection: ConfiguratorSelection;
@@ -20,29 +20,27 @@ interface ConfiguratorState {
 
 export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
   selection: {
-    baseLevel: null,
-    baseColor: null,
+    baseLevel: 'beginner',
+    baseColor: 'pike-green',
     addons: [],
   },
 
   setBaseLevel: (level) =>
     set((state) => ({
-      selection: {
+        selection: {
         ...state.selection,
         baseLevel: level,
-        addons: defaultAddonTypes[level].map((type, i) => {
-          // Only carry over the previous model/color if this slot's type
-          // hasn't changed — otherwise they belonged to a different addon
-          // (e.g. the old speaker's color) and shouldn't pre-fill the new one.
-          const previous = state.selection.addons[i];
-          const sameType = previous?.type === type;
-          return {
-            type,
-            addonModel: sameType ? previous.addonModel : null,
-            color: sameType ? previous.color : null,
-          };
+        addons: defaultAddonSelections[level].map((slot, i) => {
+            const prev = state.selection.addons[i];
+            const sameType = prev?.type === slot.type;
+
+            return {
+            type: slot.type,
+            addonModel: sameType ? prev.addonModel ?? slot.addonModel : slot.addonModel,
+            color: sameType ? prev.color ?? slot.color : slot.color,
+            };
         }),
-      },
+        },
     })),
 
   setBaseColor: (color) =>
@@ -51,7 +49,7 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
   setAddonType: (index, type) =>
     set((state) => {
       const addons = [...state.selection.addons];
-      addons[index] = { type, addonModel: null, color: null };
+      addons[index] = { type, addonModel: 'model-1', color: null };
       return { selection: { ...state.selection, addons } };
     }),
 
