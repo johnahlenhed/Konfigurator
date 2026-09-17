@@ -30,13 +30,13 @@ export const baseLevels: {
 ];
 
 export const baseColors: { id: BaseColor; label: string; hex: string }[] = [
-  { id: 'pike-green', label: 'Pike Green', hex: '#4dff00' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#ACA946' },
   { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
   { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];
 
 export const addonColors: { id: AddonColor; label: string; hex: string }[] = [
-  { id: 'pike-green', label: 'Pike Green', hex: '#4dff00' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#ACA946' },
   { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
   { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];

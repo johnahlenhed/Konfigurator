@@ -16,7 +16,7 @@
   height: 10px;
   border-radius: 50%;
   margin-top: 6px;
-  border: 1px solid transparent;
+  border: 0.5px solid transparent;
   background: transparent;
   flex-shrink: 0;
 }
