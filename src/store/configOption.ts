@@ -68,14 +68,6 @@ export const addonModels: { id: AddonModel; label: string; price: number }[] = [
   { id: 'model-2', label: 'Model 2', price: 600 },
 ];
 
-// Default type per addon slot, keyed by base level. Order matters —
-// index 0 is the first slot to appear, index 1 the second.
-export const defaultAddonTypes: Record<BaseLevel, AddonType[]> = {
-  beginner: [],
-  enthusiast: ['speaker'], // matches the Enthusiast description above: "matched with a dedicated speaker unit"
-  producer: ['speaker', 'mixer'],
-};
-
 export const defaultAddonSelections: Record<BaseLevel, Array<{ type: AddonType; addonModel: AddonModel | null; color: AddonColor | null }>> = {
   beginner: [],
   enthusiast: [
@@ -86,3 +78,4 @@ export const defaultAddonSelections: Record<BaseLevel, Array<{ type: AddonType; 
     { type: 'mixer', addonModel: 'model-1', color: null },
   ],
 };
+

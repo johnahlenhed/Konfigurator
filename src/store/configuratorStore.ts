@@ -26,22 +26,34 @@ export const useConfiguratorStore = create<ConfiguratorState>((set) => ({
   },
 
   setBaseLevel: (level) =>
-    set((state) => ({
-        selection: {
-        ...state.selection,
-        baseLevel: level,
-        addons: defaultAddonSelections[level].map((slot, i) => {
-            const prev = state.selection.addons[i];
-            const sameType = prev?.type === slot.type;
+    set((state) => {
+      const newAllowedTypes = defaultAddonSelections[level];
+      const nextAddons = newAllowedTypes.map((slot, index) => {
+        const previous = state.selection.addons[index];
 
-            return {
-            type: slot.type,
-            addonModel: sameType ? prev.addonModel ?? slot.addonModel : slot.addonModel,
-            color: sameType ? prev.color ?? slot.color : slot.color,
-            };
-        }),
+        if (previous) {
+          return {
+            type: previous.type,
+            addonModel: previous.addonModel ?? slot.addonModel ?? 'model-1',
+            color: previous.color ?? slot.color ?? null,
+          };
+        }
+
+        return {
+          type: slot.type,
+          addonModel: slot.addonModel ?? 'model-1',
+          color: slot.color ?? null,
+        };
+      });
+
+      return {
+        selection: {
+          ...state.selection,
+          baseLevel: level,
+          addons: nextAddons,
         },
-    })),
+      };
+    }),
 
   setBaseColor: (color) =>
     set((state) => ({ selection: { ...state.selection, baseColor: color } })),
