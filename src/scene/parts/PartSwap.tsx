@@ -20,6 +20,7 @@ import { option1ColorSchemes } from "../materials/option1ColorSchemes";
 import { option2ColorSchemes } from "../materials/option2ColorSchemes";
 import { getOption2MaterialName } from "../materials/option2MaterialSlots";
 import { getOption1MaterialName } from "../materials/option1MaterialSlots";
+import { traverseMeshes } from "../../utils/modelHelpers";
 
 function toGenericResolver<T extends string>(
     getMaterialName: (slot: T) => string[]
@@ -111,7 +112,7 @@ function easeOutCubic(t: number): number {
 }
 
 const FLY_IN_DISTANCE = 1;
-const FLY_IN_DURATION = 0.6;
+const FLY_IN_DURATION = 1.5;
 
 // Loads and attaches one addon GLB at a socket. Split out from PartSwap so it
 // can be mounted/unmounted based on whether a type+model is actually selected
@@ -140,9 +141,10 @@ function AddonPart({ scene, socketName, groupRef, glbPath, anchorName, addonKey,
         // Clone the loaded part so each instance is independent — avoids sharing geometry/transform with the cached GLB.
         const clone = cloneWithMaterials(partScene);
 
-        // Log the clone's meshes and materials for debugging.
+        // Enable cast- and receiveShadow for every cloned mesh
         traverseMeshes(clone, (mesh) => {
-            getMaterials(mesh).forEach((mat) => console.log('Addon part:', mesh.name, mat.name));
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
         });
 
         const anchorOffset = getAnchorOffset(clone, anchorName);

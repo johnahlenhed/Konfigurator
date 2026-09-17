@@ -9,11 +9,20 @@ interface RadioOptionRowProps {
 }
 
 export function RadioOptionRow({ label, selected, onSelect, subtext, colorHex }: RadioOptionRowProps) {
+  const isWhiteSelected = selected && colorHex?.toLowerCase() === '#f8f6e5';
+
   return (
     <button type="button" className={styles.row} onClick={onSelect} aria-pressed={selected}>
       <span
         className={styles.dot}
-        style={selected && colorHex ? { backgroundColor: colorHex } : undefined}
+        style={
+          selected && colorHex
+            ? {
+                backgroundColor: colorHex,
+                borderColor: isWhiteSelected ? '#342000' : 'transparent',
+              }
+            : undefined
+        }
         data-selected={selected}
       />
       <span className={styles.labelGroup}>

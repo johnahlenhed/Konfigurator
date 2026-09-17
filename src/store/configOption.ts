@@ -30,13 +30,13 @@ export const baseLevels: {
 ];
 
 export const baseColors: { id: BaseColor; label: string; hex: string }[] = [
-  { id: 'pike-green', label: 'Pike Green', hex: '#4dff00' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#ACA946' },
   { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
   { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];
 
 export const addonColors: { id: AddonColor; label: string; hex: string }[] = [
-  { id: 'pike-green', label: 'Pike Green', hex: '#4dff00' },
+  { id: 'pike-green', label: 'Pike Green', hex: '#ACA946' },
   { id: 'strike-orange', label: 'Strike Orange', hex: '#D08E21' },
   { id: 'cod-white', label: 'Cod White', hex: '#F8F6E5' },
 ];
@@ -59,10 +59,6 @@ export const getAddonModelLabel = (
   return id === 'model-1' ? 'Model 1' : 'Model 2';
 };
 
-// TODO: pricing is currently shared across addon types (speaker vs mixer),
-// but getAddonModelLabel shows they have distinct display labels per type
-// (SP-01/SP-02 vs MX-01/MX-02) — per-type pricing may be needed. Confirm
-// with the team before changing this data shape.
 export const addonModels: { id: AddonModel; label: string; price: number }[] = [
   { id: 'model-1', label: 'Model 1', price: 300 },
   { id: 'model-2', label: 'Model 2', price: 600 },

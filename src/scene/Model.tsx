@@ -1,7 +1,6 @@
-import { useAnimations, Html } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { useAnimations } from "@react-three/drei";
+import { useEffect } from "react";
 import { getMaterials, traverseMeshes } from "../utils/modelHelpers";
-import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import { animationGroups } from "./animations/animationGroups";
 import { applyColorScheme } from "./materials/applyMaterial";
@@ -16,9 +15,9 @@ type ModelProps = {
 
 export function Model({ scene, animations }: ModelProps) {
   const { actions } = useAnimations(animations, scene);
-  const [hovered, setHovered] = useState<string | null>(null);
   const baseColor = useConfiguratorStore((state) => state.selection.baseColor);
 
+  // ONLY IN DEV: Log mesh, materials and animations
   useEffect(() => {
       if (import.meta.env.DEV) {
           traverseMeshes(scene, (mesh) => {
@@ -28,12 +27,24 @@ export function Model({ scene, animations }: ModelProps) {
       }
   }, [scene, actions]);
 
+  // Enable cast- and receiveShadow for every mesh
   useEffect(() => {
-    Object.values(animationGroups).flat().forEach((clipName) => {
-      actions[clipName]?.play();
+    traverseMeshes(scene, (mesh) => {
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
     });
+  }, [scene]);
+
+  // Play all animations to animate buttons
+  useEffect(() => {
+    Object.values(animationGroups)
+      .flat()
+      .forEach((clipName) => {
+        actions[clipName]?.play();
+      });
   }, [actions]);
 
+  // Apply selected base color scheme to the model's materials
   useEffect(() => {
     if (!baseColor) return;
     const scheme = baseColorSchemes[baseColor];
@@ -42,23 +53,6 @@ export function Model({ scene, animations }: ModelProps) {
   }, [scene, baseColor]);
 
   return (
-    <>
-      <primitive
-        object={scene}
-        onPointerOver={(e: ThreeEvent<PointerEvent>) => {
-          e.stopPropagation();
-          if (e.object instanceof THREE.Mesh) setHovered(e.object.name);
-        }}
-        onPointerOut={() => setHovered(null)}
-      />
-
-      {hovered && (
-        <Html fullscreen>
-          <div style={{ position: 'absolute', top: 40, left: 40, color: 'white', background: 'black', padding: '4px 8px' }}>
-            {hovered}
-          </div>
-        </Html>
-      )}
-    </>
+      <primitive object={scene} />
   );
 }

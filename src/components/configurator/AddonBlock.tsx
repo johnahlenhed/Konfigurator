@@ -48,12 +48,14 @@ export function AddonBlock({ index }: AddonBlockProps) {
       </button>
 
       {isExpanded && alternateType && (
-        <RadioOptionRow
-          label={alternateType.label}
-          selected={false}
-          onSelect={() => handleSwap(alternateType.id)}
-        />
-      )}
+        <button
+            type="button"
+            className={styles.dropdownOption}
+            onClick={() => handleSwap(alternateType.id)}
+        >
+            {alternateType.label}
+        </button>
+        )}
     </>
   );
 

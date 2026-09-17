@@ -26,11 +26,11 @@
 
 .controlsPanel:hover,
 .controlsPanel:focus-within {
-  width: 440px;
+  width: 350px;
 }
 
 .controlsPanelInner {
-  width: 440px;
+  width: 350px;
   height: 100%;
   padding: 60px 24px;
   box-sizing: border-box;
