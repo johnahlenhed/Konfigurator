@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { Center, useGLTF } from '@react-three/drei'
+import { Center, ContactShadows, useGLTF } from '@react-three/drei'
 import { Suspense } from 'react'
 import { Model } from './Model'
 import { Lighting } from './Lighting'
@@ -36,8 +36,15 @@ function SceneContent() {
 
 export function Scene() {
   return (
-    <Canvas>
-      <Lighting ambientIntensity={1.5} directionalIntensity={3} directionalPosition={[7, 7, 9]} />
+    <Canvas 
+      shadows
+      gl={{ antialias: true }}
+      onCreated={({ gl }) => { 
+        gl.toneMappingExposure = 1.1 
+      }}
+    >
+      <ContactShadows position={[0, -1.23, 0]} opacity={0.6} scale={10} blur={2} far={3} />
+      <Lighting />
       <CameraSetup position={[0, 0, 10]} />
       <Suspense fallback={null}>
         <SceneContent />

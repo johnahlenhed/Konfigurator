@@ -26,6 +26,14 @@ export function Model({ scene, animations }: ModelProps) {
     console.log("Available animations: ", Object.keys(actions));
   }, [scene, actions]);
 
+  // Enable cast- and receiveShadow for every mesh
+  useEffect(() => {
+    traverseMeshes(scene, (mesh) => {
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+    });
+  }, [scene]);
+
   useEffect(() => {
     Object.values(animationGroups).flat().forEach((clipName) => {
       actions[clipName]?.play();

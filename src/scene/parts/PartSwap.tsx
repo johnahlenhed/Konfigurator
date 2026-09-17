@@ -110,6 +110,8 @@ function AddonPart({ scene, socketName, groupRef, glbPath, anchorName }: AddonPa
         // Log the clone's meshes and materials for debugging.
         traverseMeshes(clone, (mesh) => {
             getMaterials(mesh).forEach((mat) => console.log('Addon part:', mesh.name, mat.name));
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
         });
 
         const anchorOffset = getAnchorOffset(clone, anchorName);
