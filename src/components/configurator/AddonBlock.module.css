@@ -1,3 +1,7 @@
+.typeMenu {
+  position: relative;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -33,6 +37,10 @@
 }
 
 .dropdownOption {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  z-index: 1;
   display: block;
   background: none;
   border: none;
