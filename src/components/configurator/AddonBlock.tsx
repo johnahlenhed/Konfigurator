@@ -29,7 +29,7 @@ export function AddonBlock({ index }: AddonBlockProps) {
   }
 
   const header = (
-    <>
+    <div className={styles.typeMenu}>
       <button
         type="button"
         className={styles.header}
@@ -56,7 +56,7 @@ export function AddonBlock({ index }: AddonBlockProps) {
             {alternateType.label}
         </button>
         )}
-    </>
+      </div>
   );
 
   return (

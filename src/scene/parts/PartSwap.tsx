@@ -39,6 +39,11 @@ const ADDON_GLB_PATHS: Record<AddonKey, string> = {
     'mixer-model-2': '/models/Mixer_option2_color.glb',
 };
 
+// Preload all four addon GLBs at module load, so the first time a user
+// actually selects one, useGLTF returns from cache instantly instead of
+// suspending on a fresh network fetch.
+Object.values(ADDON_GLB_PATHS).forEach((path) => useGLTF.preload(path));
+
 const ANCHOR_NODES: Record<AddonKey, string> = {
     'speaker-model-1': 'baseSpeaker',
     'speaker-model-2': 'baseSpeaker2',

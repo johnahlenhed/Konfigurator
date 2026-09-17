@@ -45,7 +45,7 @@ export function Scene() {
     >
       <ContactShadows position={[0, -1.23, 0]} opacity={0.6} scale={10} blur={2} far={3} />
       <Lighting />
-      <CameraSetup />
+      <CameraSetup position={[0.35, 0, 10]} />
       <Suspense fallback={null}>
         <SceneContent />
       </Suspense>
