@@ -21,4 +21,5 @@
   line-height: 1.5;
   color: var(--color-text-info);
   pointer-events: none;
+  text-align: left;
 }
