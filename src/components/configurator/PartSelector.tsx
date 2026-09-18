@@ -13,7 +13,6 @@ export function PartSelector() {
         <RadioOptionRow
           key={level.id}
           label={level.label}
-          subtext="Info"
           selected={baseLevel === level.id}
           onSelect={() => setBaseLevel(level.id)}
         />
